@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://diahunbpiy6p0"]
+
+[ext_resource type="Script" uid="uid://bieyoj2ssqy3k" path="res://scripts/repository.gd" id="1_cja7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jx1s0"]
+size = Vector2(64, 64)
+
+[node name="repository" type="Area2D" groups=["repositories"]]
+script = ExtResource("1_cja7j")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jx1s0")
+
+[node name="color" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.436087, 0.294018, 0.0314384, 1)
+
+[node name="triangle" type="Polygon2D" parent="."]
+color = Color(0.919162, 0.784667, 0.209681, 1)
+polygon = PackedVector2Array(-32, 32, 0, -32, 32, 32)
+
+[node name="progress_bar" type="ProgressBar" parent="."]
+visible = false
+offset_left = 40.0
+offset_top = -32.0
+offset_right = 48.0
+offset_bottom = 35.0
+mouse_filter = 2
+fill_mode = 3
+show_percentage = false

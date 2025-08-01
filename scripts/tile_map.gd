@@ -42,16 +42,15 @@ func _ready():
 					land_astar.set_point_solid(pos)
 
 func is_point_walkable(point, mobility):
-	var pos = local_to_map(point)
 	match mobility:
 		"land":
-			if land_astar.region.has_point(pos) and not land_astar.is_point_solid(pos):
+			if land_astar.region.has_point(point) and not land_astar.is_point_solid(point):
 				return true
 		"water":
-			if water_astar.region.has_point(pos) and not water_astar.is_point_solid(pos):
+			if water_astar.region.has_point(point) and not water_astar.is_point_solid(point):
 				return true
 		"flight":
-			if flight_astar.region.has_point(pos) and not flight_astar.is_point_solid(pos):
+			if flight_astar.region.has_point(point) and not flight_astar.is_point_solid(point):
 				return true
 		_:
 			return false

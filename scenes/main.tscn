@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=4 uid="uid://bhmq5f3vg5p5e"]
+[gd_scene load_steps=11 format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://danfn2f2rmdgr" path="res://assets/basic tileset.png" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://dxxe5j4nvrw4s" path="res://scripts/tile_map.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://vww06adkxjjq" path="res://scenes/robot.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://cpxpckcp3810l" path="res://scenes/robot_factory.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://diahunbpiy6p0" path="res://scenes/repository.tscn" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://cxkjehvkb3ect" path="res://scenes/mine.tscn" id="7_o6xl0"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5qli"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -41,11 +44,18 @@ tile_set = SubResource("TileSet_sugp2")
 navigation_enabled = false
 script = ExtResource("1_sugp2")
 
-[node name="robot" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(352, 160)
+[node name="robot_factory" parent="." instance=ExtResource("4_tbgi4")]
+position = Vector2(800, 544)
+robot_scene = ExtResource("2_0wfyh")
 
-[node name="robot2" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(800, 160)
+[node name="repository" parent="." instance=ExtResource("6_tefeu")]
+position = Vector2(928, 544)
+
+[node name="mine" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(1056, 160)
+
+[node name="robot" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(672, 544)
 
 [node name="dimmer" type="ColorRect" parent="."]
 visible = false
