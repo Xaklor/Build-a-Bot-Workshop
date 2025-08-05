@@ -23,6 +23,8 @@ window/size/viewport_height=704
 [global_group]
 
 repositories=""
+enemies=""
+robots=""
 
 [input]
 

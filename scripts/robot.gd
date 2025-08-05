@@ -20,14 +20,20 @@ var harvest_target: Node2D
 var harvest_pos: Vector2i
 var repository_target: Node2D
 var repository_pos: Vector2i
+var weapon: Equipment.Weapon
+var hp = 10
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
 	tile_map.claim_pos(claimed_pos)
 	main.stop_time.connect(_on_timestop)
+	weapon = Equipment.weapons[0]
 	
 func _process(delta):
 	if not stopped:
+		if $attack_highlight.color.a > 0:
+			$attack_highlight.color.a -= 0.01
+			
 		########################################
 		# FIRST: 
 		# if already on a path, continue walking
@@ -79,6 +85,21 @@ func _process(delta):
 					update_claimed_position(harvest_pos)
 			else:
 				status = state.IDLE
+				
+		##############################################################
+		# FIFTH: 
+		# if idle and holding a ranged weapon, attack enemies in range
+		##############################################################
+		elif status == state.IDLE and weapon.ranged and $attack_cooldown.time_left <= 0:
+			var enemy_list = get_tree().get_nodes_in_group("enemies")
+			for enemy in enemy_list:
+				var enemy_pos = tile_map.local_to_map(enemy.position)
+				var self_pos = tile_map.local_to_map(position)
+				if abs(self_pos.x - enemy_pos.x) + abs(self_pos.y - enemy_pos.y) <= 3:
+					enemy.take_damage(weapon.attack)
+					$attack_highlight.color.a = 1
+					$attack_cooldown.start()
+					break
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc"):
@@ -131,6 +152,13 @@ func navigate(target):
 					
 	return out
 	
+func take_damage(damage: int):
+	hp -= damage
+	if hp <= 0:
+		queue_free()
+	
 func _on_timestop(b: bool):
 	stopped = b
+	$attack_cooldown.paused = b
+	
 	

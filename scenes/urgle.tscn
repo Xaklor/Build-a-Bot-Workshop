@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtm6rytj8v23a"]
+
+[ext_resource type="Script" uid="uid://dd8boq4y2xjj1" path="res://scripts/urgle.gd" id="1_30vdl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_memkk"]
+size = Vector2(64, 64)
+
+[node name="urgle" type="Area2D" groups=["enemies"]]
+script = ExtResource("1_30vdl")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_memkk")
+
+[node name="color" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.908853, 0.349482, 0.596036, 1)
+
+[node name="eye" type="Polygon2D" parent="."]
+color = Color(0.881937, 0.881937, 0.881937, 1)
+polygon = PackedVector2Array(-16, -24, -16, -16, -24, -16, -24, 16, -16, 16, -16, 24, 16, 24, 16, 16, 24, 16, 24, -16, 16, -16, 16, -24)
+
+[node name="pupil" type="ColorRect" parent="."]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="hurt_highlight" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.796078, 0, 0, 0)

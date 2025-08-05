@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://bhmq5f3vg5p5e"]
+[gd_scene load_steps=13 format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://danfn2f2rmdgr" path="res://assets/basic tileset.png" id="1_o5qli"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cpxpckcp3810l" path="res://scenes/robot_factory.tscn" id="4_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://diahunbpiy6p0" path="res://scenes/repository.tscn" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://cxkjehvkb3ect" path="res://scenes/mine.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://dtm6rytj8v23a" path="res://scenes/urgle.tscn" id="8_tipki"]
+[ext_resource type="PackedScene" uid="uid://221hpelvs8kh" path="res://scenes/bear.tscn" id="9_85g3d"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5qli"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -52,10 +54,16 @@ robot_scene = ExtResource("2_0wfyh")
 position = Vector2(928, 544)
 
 [node name="mine" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(1056, 160)
+position = Vector2(928, 160)
 
 [node name="robot" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(672, 544)
+
+[node name="urgle" parent="." instance=ExtResource("8_tipki")]
+position = Vector2(352, 160)
+
+[node name="bear" parent="." instance=ExtResource("9_85g3d")]
+position = Vector2(352, 544)
 
 [node name="dimmer" type="ColorRect" parent="."]
 visible = false

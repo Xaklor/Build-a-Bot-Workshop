@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://221hpelvs8kh"]
+
+[ext_resource type="Script" uid="uid://dn0dsudwpl1b" path="res://scripts/bear.gd" id="1_a3xf0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tg87"]
+size = Vector2(64, 64)
+
+[node name="bear" type="Area2D" groups=["enemies"]]
+script = ExtResource("1_a3xf0")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2tg87")
+
+[node name="color" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="teeth" type="Polygon2D" parent="."]
+color = Color(0.332563, 0.21121, 0.0740334, 1)
+polygon = PackedVector2Array(-32, -32, -24, -16, -16, -32, -8, -16, 0, -32, 8, -16, 16, -32, 24, -16, 32, -32, 32, 32, 24, 16, 16, 32, 8, 16, 0, 32, -8, 16, -16, 32, -24, 16, -32, 32)
+
+[node name="hurt_highlight" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(1, 0, 0, 0)
+
+[node name="attack_cooldown" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
