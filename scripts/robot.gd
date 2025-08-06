@@ -6,7 +6,8 @@ extends Area2D
 
 enum state {
 	IDLE,
-	HARVESTING
+	HARVESTING,
+	RECHARGING
 }
 
 var status: state = state.IDLE
@@ -34,8 +35,27 @@ func _process(delta):
 		if $attack_highlight.color.a > 0:
 			$attack_highlight.color.a -= 0.01
 			
+		if $progress_bar.value >= 100:
+			$progress_bar.visible = false
+			
+		if $progress_bar.value <= 80:
+			$progress_bar.visible = true
+
+		#############################################################		
+		# FIRST:
+		# if low on energy and a charger is in range, start recharging
+		#############################################################
+		if $progress_bar.value <= 20 and status != state.RECHARGING:
+			var charger_list = get_tree().get_nodes_in_group("chargers")
+			var charger_pos = tile_map.local_to_map(charger_list[0].position)
+			if in_range(charger_pos, 5):
+				status = state.RECHARGING
+				path = navigate(charger_pos)
+				if !path.is_empty():
+					update_claimed_position(charger_pos)
+			
 		########################################
-		# FIRST: 
+		# SECOND: 
 		# if already on a path, continue walking
 		########################################
 		if not path.is_empty():
@@ -44,10 +64,33 @@ func _process(delta):
 			
 			# if we've reached the point, remove it from the path
 			if global_position == target:
+				$progress_bar.value -= 1
 				path.pop_front()
+
+		######################################################
+		# THIRD:
+		# if recharging and standing on a charger, gain energy
+		######################################################
+		elif status == state.RECHARGING and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
+			$progress_bar.value += 1
+			if $progress_bar.value >= 100:
+				# if we were in the middle of harvesting, return to harvesting instead of idle
+				if harvest_target != null:
+					status = state.HARVESTING
+					if item == 1:
+						path = navigate(repository_pos)
+						if !path.is_empty():
+							update_claimed_position(repository_pos)
+					else:
+						path = navigate(harvest_pos)
+						if !path.is_empty():
+							update_claimed_position(harvest_pos)
+							
+				else:
+					status = state.IDLE
 				
 		################################################################
-		# SECOND: 
+		# FOURTH: 
 		# if idle and standing on a harvestable object, start harvesting
 		################################################################
 		elif status == state.IDLE and get_overlapping_areas().any(func(x): return x.has_meta("harvestable") and x.get_meta("harvestable")):
@@ -62,43 +105,47 @@ func _process(delta):
 			repository_pos = tile_map.local_to_map(repository_target.position)
 
 		##############################################################################
-		# THIRD:
+		# FIFTH:
 		# if harvesting and standing on a harvestable object, bring item to repository
 		##############################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x.has_meta("harvestable") and x.get_meta("harvestable")):
 			harvest_target.inventory -= 20
 			harvest_target.update()
+			item = 1
 			path = navigate(repository_pos)
 			if not path.is_empty():
 				update_claimed_position(repository_pos)
 		
 		########################################################################
-		# FOURTH:
+		# SIXTH:
 		# if harvesting and standing on a repository, insert item and fetch more
 		########################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x == repository_target):
 			repository_target.inventory += 10
 			repository_target.update()
+			item = 0
 			if harvest_target.inventory > 0:
 				path = navigate(harvest_pos)
 				if not path.is_empty():
 					update_claimed_position(harvest_pos)
 			else:
 				status = state.IDLE
+				harvest_target = null
+				repository_target = null
 				
 		##############################################################
-		# FIFTH: 
+		# SEVENTH: 
 		# if idle and holding a ranged weapon, attack enemies in range
 		##############################################################
 		elif status == state.IDLE and weapon.ranged and $attack_cooldown.time_left <= 0:
 			var enemy_list = get_tree().get_nodes_in_group("enemies")
 			for enemy in enemy_list:
 				var enemy_pos = tile_map.local_to_map(enemy.position)
-				var self_pos = tile_map.local_to_map(position)
-				if abs(self_pos.x - enemy_pos.x) + abs(self_pos.y - enemy_pos.y) <= 3:
+				if in_range(enemy_pos, 3):
 					enemy.take_damage(weapon.attack)
 					$attack_highlight.color.a = 1
 					$attack_cooldown.start()
+					$progress_bar.value -= 5
 					break
 
 func _input(event: InputEvent) -> void:
@@ -130,14 +177,15 @@ func _input(event: InputEvent) -> void:
 					$color.color = 0xc74462ff
 		
 			
-func update_claimed_position(pos: Vector2):
+func update_claimed_position(pos: Vector2i):
 	tile_map.claim_pos(claimed_pos, false)
 	claimed_pos = pos
 	tile_map.claim_pos(claimed_pos)
 	
-func abandon_orders():
-	pass
-	
+func in_range(pos: Vector2i, dist: int) -> bool:
+	var self_pos = tile_map.local_to_map(position)
+	return abs(self_pos.x - pos.x) + abs(self_pos.y - pos.y) <= dist
+
 # returns shortest path to the target position if possible, takes grid coords
 func navigate(target):
 	var out: Array[Vector2i] = []

@@ -47,3 +47,13 @@ color = Color(1, 1, 1, 0)
 
 [node name="attack_cooldown" type="Timer" parent="."]
 one_shot = true
+
+[node name="progress_bar" type="ProgressBar" parent="."]
+visible = false
+offset_left = 40.0
+offset_top = -32.0
+offset_right = 48.0
+offset_bottom = 32.0
+value = 100.0
+fill_mode = 3
+show_percentage = false
