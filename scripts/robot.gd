@@ -23,6 +23,7 @@ var repository_target: Node2D
 var repository_pos: Vector2i
 var weapon: Equipment.Weapon
 var hp = 10
+var energy = 100
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
@@ -45,7 +46,7 @@ func _process(delta):
 		# FIRST:
 		# if low on energy and a charger is in range, start recharging
 		#############################################################
-		if $progress_bar.value <= 20 and status != state.RECHARGING:
+		if energy <= 20 and status != state.RECHARGING:
 			var charger_list = get_tree().get_nodes_in_group("chargers")
 			var charger_pos = tile_map.local_to_map(charger_list[0].position)
 			if in_range(charger_pos, 5):
@@ -64,16 +65,16 @@ func _process(delta):
 			
 			# if we've reached the point, remove it from the path
 			if global_position == target:
-				$progress_bar.value -= 1
+				energy -= 1
 				path.pop_front()
 
-		######################################################
+		##############################################################
 		# THIRD:
-		# if recharging and standing on a charger, gain energy
-		######################################################
-		elif status == state.RECHARGING and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
-			$progress_bar.value += 1
-			if $progress_bar.value >= 100:
+		# if recharging or idle and standing on a charger, gain energy
+		##############################################################
+		elif (status == state.RECHARGING or status == state.IDLE) and energy < 100 and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
+			energy += 1
+			if energy >= 100:
 				# if we were in the middle of harvesting, return to harvesting instead of idle
 				if harvest_target != null:
 					status = state.HARVESTING
@@ -145,7 +146,7 @@ func _process(delta):
 					enemy.take_damage(weapon.attack)
 					$attack_highlight.color.a = 1
 					$attack_cooldown.start()
-					$progress_bar.value -= 5
+					energy -= 5
 					break
 
 func _input(event: InputEvent) -> void:
@@ -203,6 +204,7 @@ func navigate(target):
 func take_damage(damage: int):
 	hp -= damage
 	if hp <= 0:
+		tile_map.claim_pos(claimed_pos, false)
 		queue_free()
 	
 func _on_timestop(b: bool):

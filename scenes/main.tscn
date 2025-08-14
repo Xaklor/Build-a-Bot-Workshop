@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://bhmq5f3vg5p5e"]
+[gd_scene load_steps=15 format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://scripts/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://danfn2f2rmdgr" path="res://assets/basic tileset.png" id="1_o5qli"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://cxkjehvkb3ect" path="res://scenes/mine.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dtm6rytj8v23a" path="res://scenes/urgle.tscn" id="8_tipki"]
 [ext_resource type="PackedScene" uid="uid://221hpelvs8kh" path="res://scenes/bear.tscn" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://b8demwhq352jk" path="res://scenes/hud.tscn" id="11_ya4ey"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5qli"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -69,8 +70,13 @@ position = Vector2(352, 160)
 [node name="bear" parent="." instance=ExtResource("9_85g3d")]
 position = Vector2(352, 544)
 
+[node name="hud" parent="." instance=ExtResource("11_ya4ey")]
+
 [node name="dimmer" type="ColorRect" parent="."]
 visible = false
 offset_right = 1280.0
 offset_bottom = 704.0
 color = Color(0.137, 0.137, 0.137, 0.359)
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]

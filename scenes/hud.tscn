@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8demwhq352jk"]
+
+[ext_resource type="Script" uid="uid://wt7ics6xuaef" path="res://scripts/hud.gd" id="1_oo0fn"]
+[ext_resource type="PackedScene" uid="uid://ohp1m3vedn43" path="res://scenes/robot_ui_element.tscn" id="2_5ysmq"]
+
+[node name="hud" type="CanvasLayer"]
+script = ExtResource("1_oo0fn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -320.0
+offset_right = 160.0
+offset_bottom = 320.0
+grow_vertical = 2
+size_flags_horizontal = 0
+color = Color(0.09, 0.09, 0.09, 0.392157)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 144.0
+offset_bottom = 656.0
+
+[node name="robot_ui_element1" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2
+
+[node name="robot_ui_element2" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2
+
+[node name="robot_ui_element3" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2
+
+[node name="robot_ui_element4" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2
+
+[node name="robot_ui_element5" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2
+
+[node name="robot_ui_element6" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
+visible = false
+layout_mode = 2

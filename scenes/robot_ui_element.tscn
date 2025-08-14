@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://ohp1m3vedn43"]
+
+[node name="robot_ui_element" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="color" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+color = Color(0.780392, 0.266667, 0.384314, 1)
+
+[node name="hp" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(8, 64)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="energy" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(8, 64)
+layout_mode = 2
+fill_mode = 3
+show_percentage = false
