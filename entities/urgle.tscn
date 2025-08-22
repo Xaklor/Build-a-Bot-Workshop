@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dtm6rytj8v23a"]
 
-[ext_resource type="Script" uid="uid://dd8boq4y2xjj1" path="res://scripts/urgle.gd" id="1_30vdl"]
+[ext_resource type="Script" uid="uid://dd8boq4y2xjj1" path="res://entities/urgle.gd" id="1_30vdl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_memkk"]
 size = Vector2(64, 64)
 
-[node name="urgle" type="Area2D" groups=["enemies"]]
+[node name="urgle" type="Area2D" groups=["enemies", "entities"]]
 script = ExtResource("1_30vdl")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
@@ -36,4 +36,5 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 1
 color = Color(0.796078, 0, 0, 0)

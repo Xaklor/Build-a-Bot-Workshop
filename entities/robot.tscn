@@ -1,0 +1,186 @@
+[gd_scene load_steps=4 format=3 uid="uid://vww06adkxjjq"]
+
+[ext_resource type="Script" uid="uid://4lccil06vgh1" path="res://entities/robot.gd" id="1_br0rw"]
+[ext_resource type="PackedScene" uid="uid://dshpdwdjn7gvl" path="res://ui/build_manager.tscn" id="2_8mpls"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl0xr"]
+size = Vector2(60, 60)
+
+[node name="robot" type="Area2D" groups=["entities", "robots"]]
+process_mode = 1
+input_pickable = false
+script = ExtResource("1_br0rw")
+build_manager = ExtResource("2_8mpls")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gl0xr")
+
+[node name="color" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0.780392, 0.266667, 0.384314, 1)
+
+[node name="select_highlight" type="ColorRect" parent="."]
+visible = false
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.359)
+
+[node name="attack_highlight" type="ColorRect" parent="."]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="attack_cooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="work_bar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -32.0
+offset_top = -40.0
+offset_right = 32.0
+offset_bottom = -32.0
+show_percentage = false
+
+[node name="status_label" type="Label" parent="."]
+offset_left = -32.0
+offset_top = 32.0
+offset_right = 32.0
+offset_bottom = 55.0
+
+[node name="menu" type="TabContainer" parent="."]
+visible = false
+z_index = 500
+z_as_relative = false
+offset_left = 40.0
+offset_top = -104.0
+offset_right = 192.0
+offset_bottom = 104.0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 14
+current_tab = 0
+
+[node name="upgrade" type="VBoxContainer" parent="menu"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer1" type="MarginContainer" parent="menu/upgrade"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+
+[node name="land_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer1/land_row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0.780392, 0.266667, 0.384314, 1)
+
+[node name="Label" type="Label" parent="menu/upgrade/MarginContainer1/land_row"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Land Only"
+
+[node name="MarginContainer2" type="MarginContainer" parent="menu/upgrade"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+
+[node name="water_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer2/water_row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0.470588, 0.698039, 0.972549, 1)
+
+[node name="Label" type="Label" parent="menu/upgrade/MarginContainer2/water_row"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Swim Upgrade"
+
+[node name="MarginContainer3" type="MarginContainer" parent="menu/upgrade"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+
+[node name="flight_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer3"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer3/flight_row"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0.921569, 0.839216, 0.501961, 1)
+
+[node name="Label" type="Label" parent="menu/upgrade/MarginContainer3/flight_row"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Flight Upgrade"
+
+[node name="build" type="VBoxContainer" parent="menu"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="menu/build"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="menu/build/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/build/MarginContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="repository" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Repository"
+
+[node name="factory" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Factory"
+
+[node name="charger" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Charger"
+
+[node name="mine" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mine"
+
+[connection signal="gui_input" from="menu" to="." method="_on_menu_input"]

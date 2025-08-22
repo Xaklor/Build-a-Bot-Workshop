@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxkjehvkb3ect"]
 
-[ext_resource type="Script" uid="uid://ckqvsfs5v2bfp" path="res://scripts/mine.gd" id="1_kqr42"]
+[ext_resource type="Script" uid="uid://ckqvsfs5v2bfp" path="res://buildings/mine.gd" id="1_kqr42"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ku5q0"]
 size = Vector2(64, 64)
 
-[node name="mine" type="Area2D"]
+[node name="mine" type="Area2D" groups=["buildings"]]
 script = ExtResource("1_kqr42")
 metadata/harvestable = true
 
@@ -17,6 +17,7 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 1
 color = Color(0.215686, 0.188235, 0.0784314, 1)
 
 [node name="diamond" type="Polygon2D" parent="."]

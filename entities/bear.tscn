@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://221hpelvs8kh"]
 
-[ext_resource type="Script" uid="uid://dn0dsudwpl1b" path="res://scripts/bear.gd" id="1_a3xf0"]
+[ext_resource type="Script" uid="uid://dn0dsudwpl1b" path="res://entities/bear.gd" id="1_a3xf0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tg87"]
 size = Vector2(64, 64)
 
-[node name="bear" type="Area2D" groups=["enemies"]]
+[node name="bear" type="Area2D" groups=["enemies", "entities"]]
 script = ExtResource("1_a3xf0")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
@@ -16,6 +16,7 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 1
 
 [node name="teeth" type="Polygon2D" parent="."]
 color = Color(0.332563, 0.21121, 0.0740334, 1)
@@ -26,6 +27,7 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 1
 color = Color(1, 0, 0, 0)
 
 [node name="attack_cooldown" type="Timer" parent="."]

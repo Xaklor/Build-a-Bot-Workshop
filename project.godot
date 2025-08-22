@@ -26,6 +26,9 @@ repositories=""
 enemies=""
 robots=""
 chargers=""
+indicators=""
+entities=""
+buildings=""
 
 [input]
 

@@ -1,5 +1,7 @@
 extends TileMapLayer
 
+@export var claim_indicator: PackedScene
+
 var land_astar = AStarGrid2D.new()
 var water_astar = AStarGrid2D.new()
 var flight_astar = AStarGrid2D.new()
@@ -61,4 +63,15 @@ func is_point_walkable(point, mobility):
 func claim_pos(pos, solid = true):
 	land_astar.set_point_solid(pos, solid)
 	water_astar.set_point_solid(pos, solid)
-	flight_astar.set_point_solid(pos, solid)	
+	flight_astar.set_point_solid(pos, solid)
+	
+	if solid:
+		var indicator = claim_indicator.instantiate()
+		indicator.position = map_to_local(pos) - Vector2(24, 24)
+		add_child(indicator)
+		
+	else:
+		var indicators = get_tree().get_nodes_in_group("indicators")
+		for indicator in indicators:
+			if local_to_map(indicator.position) == pos:
+				indicator.queue_free()

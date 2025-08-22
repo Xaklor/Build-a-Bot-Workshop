@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 	if $error_highlight.color.a > 0:
 		$error_highlight.color.a -= 0.01
 	
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc") and $color.get_rect().has_point(get_local_mouse_position()):
 		var repository = get_tree().get_nodes_in_group("repositories")[0]
 		if repository.inventory <= 0:

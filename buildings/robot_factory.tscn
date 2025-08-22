@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://cpxpckcp3810l"]
 
-[ext_resource type="Script" uid="uid://cmkkli06j15cn" path="res://scripts/robot_factory.gd" id="1_p4cd4"]
+[ext_resource type="Script" uid="uid://cmkkli06j15cn" path="res://buildings/robot_factory.gd" id="1_p4cd4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrxw0"]
 size = Vector2(64, 64)
 
-[node name="robot_factory" type="Area2D"]
+[node name="robot_factory" type="Area2D" groups=["buildings"]]
 script = ExtResource("1_p4cd4")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
@@ -16,6 +16,7 @@ offset_left = -32.0
 offset_top = -32.0
 offset_right = 32.0
 offset_bottom = 32.0
+mouse_filter = 1
 color = Color(0.18687, 0.32854, 0.109116, 1)
 
 [node name="plus" type="Polygon2D" parent="."]

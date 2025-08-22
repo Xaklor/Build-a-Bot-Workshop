@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://diahunbpiy6p0"]
 
-[ext_resource type="Script" uid="uid://bieyoj2ssqy3k" path="res://scripts/repository.gd" id="1_cja7j"]
+[ext_resource type="Script" uid="uid://bieyoj2ssqy3k" path="res://buildings/repository.gd" id="1_cja7j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jx1s0"]
 size = Vector2(64, 64)
 
-[node name="repository" type="Area2D" groups=["repositories"]]
+[node name="repository" type="Area2D" groups=["buildings", "repositories"]]
 script = ExtResource("1_cja7j")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
