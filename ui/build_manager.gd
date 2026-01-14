@@ -26,10 +26,7 @@ func _input(event: InputEvent) -> void:
 				for repo in get_tree().get_nodes_in_group("repositories"):
 					if repo.get_node("color").get_rect().has_point(repo.get_local_mouse_position()):
 						var mouse_pos = tile_map.local_to_map($area.get_local_mouse_position())
-						if repo.get_node("progress_bar").value < 10:
-							$label.text = "That Repository has insufficient material"
-							break
-						elif robot.navigate(mouse_pos).is_empty():
+						if robot.navigate(mouse_pos).is_empty():
 							$label.text = "The robot cannot reach that Repository"
 							break
 						else:

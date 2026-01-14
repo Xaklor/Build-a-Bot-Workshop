@@ -15,13 +15,11 @@ func _process(delta: float) -> void:
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc") and $color.get_rect().has_point(get_local_mouse_position()):
-		var repository = get_tree().get_nodes_in_group("repositories")[0]
-		if repository.inventory <= 0:
+		if main.metals < 10:
 			$error_highlight.color.a = 1
 			
 		else:
-			repository.inventory -= 10
-			repository.update()
+			main.update_resource("metals", -10)
 			var target = pos
 			if not tile_map.land_astar.is_point_solid(pos + Vector2i(1, 0)):
 				target = pos + Vector2i(1, 0)

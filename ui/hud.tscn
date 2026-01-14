@@ -47,3 +47,24 @@ layout_mode = 2
 [node name="robot_ui_element6" parent="VBoxContainer" instance=ExtResource("2_5ysmq")]
 visible = false
 layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 192.0
+offset_top = 640.0
+offset_right = 704.0
+offset_bottom = 704.0
+
+[node name="metals_label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Metals: 0"
+
+[node name="gems_label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Gems: 0"
+
+[node name="essence_label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Essence: 0"

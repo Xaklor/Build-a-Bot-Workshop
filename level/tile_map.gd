@@ -60,12 +60,12 @@ func is_point_walkable(point, mobility):
 	return false
 	
 # wrapper for robots to claim positions on all three mobility maps
-func claim_pos(pos, solid = true):
+func claim_pos(pos, solid = true, startup = false):
 	land_astar.set_point_solid(pos, solid)
 	water_astar.set_point_solid(pos, solid)
 	flight_astar.set_point_solid(pos, solid)
 	
-	if solid:
+	if solid and !startup:
 		var indicator = claim_indicator.instantiate()
 		indicator.position = map_to_local(pos) - Vector2(24, 24)
 		add_child(indicator)
@@ -75,3 +75,8 @@ func claim_pos(pos, solid = true):
 		for indicator in indicators:
 			if local_to_map(indicator.position) == pos:
 				indicator.queue_free()
+				
+func free_indicator(pos):
+	for indicator in get_tree().get_nodes_in_group("indicators"):
+		if local_to_map(indicator.position) == pos:
+			indicator.queue_free()

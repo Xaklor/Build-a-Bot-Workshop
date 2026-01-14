@@ -31,17 +31,17 @@ var energy = 100
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
-	tile_map.claim_pos(claimed_pos)
+	tile_map.claim_pos(claimed_pos, true, true)
 	main.stop_time.connect(_on_timestop)
 	weapon = Equipment.weapons[0]
 	
 func _process(delta):
 	$status_label.text = var_to_str(status)
 	if not stopped:
-		if $attack_highlight.color.a > 0:
-			$attack_highlight.color.a -= 0.01
+		if $sprite/attack_highlight.color.a > 0:
+			$sprite/attack_highlight.color.a -= 0.01
 			
-		$select_highlight.visible = selected
+		$sprite/select_highlight.visible = selected
 		$work_bar.visible = $work_bar.value > 0
 
 		#############################################################		
@@ -69,6 +69,10 @@ func _process(delta):
 			if global_position == target:
 				energy -= 1
 				path.pop_front()
+				
+				# if this is the destination, free the indicator
+				if path.is_empty():
+					tile_map.free_indicator(tile_map.local_to_map(target))
 
 		##############################################################
 		# THIRD:
@@ -111,8 +115,7 @@ func _process(delta):
 		###########################################################################
 		elif status == state.BUILDING and item == 0 and claimed_pos == repository_pos:
 			item = 1
-			repository_target.inventory -= 10
-			repository_target.update()
+			main.update_resource("metals", -10)
 				
 		###############################################################################
 		# SIXTH:
@@ -176,8 +179,7 @@ func _process(delta):
 		# if harvesting and standing on a repository, insert item and fetch more
 		########################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x == repository_target):
-			repository_target.inventory += 10
-			repository_target.update()
+			main.update_resource("metals", 10)
 			item = 0
 			if harvest_target.inventory > 0:
 				path = navigate(harvest_pos)
@@ -198,7 +200,7 @@ func _process(delta):
 				var enemy_pos = tile_map.local_to_map(enemy.position)
 				if in_range(enemy_pos, 3):
 					enemy.take_damage(weapon.attack)
-					$attack_highlight.color.a = 1
+					$sprite/attack_highlight.color.a = 1
 					$attack_cooldown.start()
 					energy -= 5
 					break
@@ -238,13 +240,13 @@ func _on_menu_input(event: InputEvent) -> void:
 					mobility = "flight"
 					$color.color = 0xebd680ff
 			1:
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/repository.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()):
+				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/repository.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
 					start_build_manager("repository")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/factory.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()):
+				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/factory.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
 					start_build_manager("factory")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/charger.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()):
+				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/charger.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
 					start_build_manager("charger")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/mine.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()):
+				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/mine.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
 					start_build_manager("mine")
 
 func update_claimed_position(pos: Vector2i):

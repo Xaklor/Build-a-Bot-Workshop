@@ -3,6 +3,9 @@ extends Node
 signal stop_time
 var stopped = false
 var robot_ui_pointer = 1
+var metals = 0
+var gems = 0
+var essence = 0
 
 func _process(delta: float) -> void:
 	var i = 1
@@ -22,6 +25,7 @@ func _input(event: InputEvent) -> void:
 		timestop_toggle()
 
 func timestop_toggle(force: bool = false, stop: bool = true):
+	update_resource("metals", 5)
 	if not force:
 		stopped = not stopped
 		$dimmer.visible = stopped
@@ -30,7 +34,19 @@ func timestop_toggle(force: bool = false, stop: bool = true):
 		stopped = stop
 		$dimmer.visible = stop
 		stop_time.emit(stop)
-
+		
+func update_resource(resource: String, amount: int):
+	match resource:
+		"metals":
+			metals += amount
+			$hud/HBoxContainer/metals_label.text = "Metals: %d" % metals
+		"gems":
+			gems += amount
+			$hud/HBoxContainer/gems_label.text = "Gems: %d" % gems
+		"essence":
+			essence += amount
+			$hud/HBoxContainer/essence_label.text = "Essence: %d" % essence
+			
 func _on_child_entered_tree(node: Node) -> void:
 	$dimmer.move_to_front.call_deferred()
 	if node.is_in_group("robots"):
