@@ -1,6 +1,6 @@
 class_name Robot extends Area2D
 
-@export var speed = 800
+@export var speed = 400
 @export var build_manager: PackedScene
 @onready var tile_map: TileMapLayer = get_tree().get_root().get_node("main").get_node("tile_map")
 @onready var main = get_tree().get_root().get_node("main")
@@ -25,15 +25,14 @@ var repository_target: Node2D
 var repository_pos: Vector2i
 var build_target: String = ""
 var build_pos: Vector2i
-var weapon: Equipment.Weapon
 var hp = 10
+var power = 1
 var energy = 100
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
 	tile_map.claim_pos(claimed_pos, true, true)
 	main.stop_time.connect(_on_timestop)
-	weapon = Equipment.weapons[0]
 	
 func _process(delta):
 	$status_label.text = var_to_str(status)
@@ -194,12 +193,12 @@ func _process(delta):
 		# ELEVENTH: 
 		# if idle and holding a ranged weapon, attack enemies in range
 		##############################################################
-		elif status == state.IDLE and weapon.ranged and $attack_cooldown.time_left <= 0:
+		elif status == state.IDLE and $attack_cooldown.time_left <= 0:
 			var enemy_list = get_tree().get_nodes_in_group("enemies")
 			for enemy in enemy_list:
 				var enemy_pos = tile_map.local_to_map(enemy.position)
 				if in_range(enemy_pos, 3):
-					enemy.take_damage(weapon.attack)
+					enemy.take_damage(power)
 					$sprite/attack_highlight.color.a = 1
 					$attack_cooldown.start()
 					energy -= 5

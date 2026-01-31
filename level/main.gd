@@ -3,9 +3,32 @@ extends Node
 signal stop_time
 var stopped = false
 var robot_ui_pointer = 1
-var metals = 0
+var metals = 1000
 var gems = 0
 var essence = 0
+var upgrades: Array[Lib.Upgrade] = [
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(0, 2)], "construction", 10), 
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(2, -1)], "capacity", 10), 
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)], "energy", 100), 
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, 0)], "health", 10), 
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)], "power", 2), 
+	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, -1)], "speed", 400)]
+
+func _ready() -> void:
+	upgrades[0].sprite.texture = load("res://assets/upgrade construction.png")
+	upgrades[1].sprite.texture = load("res://assets/upgrade capacity.png")
+	upgrades[2].sprite.texture = load("res://assets/upgrade energy.png")
+	upgrades[3].sprite.texture = load("res://assets/upgrade health.png")
+	upgrades[4].sprite.texture = load("res://assets/upgrade power.png")
+	upgrades[5].sprite.texture = load("res://assets/upgrade speed.png")
+	upgrades[0].sprite.centered = false
+	upgrades[1].sprite.centered = false
+	upgrades[2].sprite.centered = false
+	upgrades[3].sprite.centered = false
+	upgrades[4].sprite.centered = false
+	upgrades[5].sprite.centered = false
+	upgrades[1].sprite.offset.y = -64
+	upgrades[5].sprite.offset.y = -64
 
 func _process(delta: float) -> void:
 	var i = 1
@@ -25,7 +48,6 @@ func _input(event: InputEvent) -> void:
 		timestop_toggle()
 
 func timestop_toggle(force: bool = false, stop: bool = true):
-	update_resource("metals", 5)
 	if not force:
 		stopped = not stopped
 		$dimmer.visible = stopped
@@ -60,4 +82,3 @@ func _on_child_exiting_tree(node: Node) -> void:
 	if node.is_in_group("robots"):
 		robot_ui_pointer -= 1
 		get_node("hud/VBoxContainer/robot_ui_element" + var_to_str(robot_ui_pointer)).visible = false
-		

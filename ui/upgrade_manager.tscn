@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://dugx4xcb626r3"]
+
+[ext_resource type="Texture2D" uid="uid://d4iml72e433ws" path="res://assets/upgrade grid.png" id="1_p2mtw"]
+[ext_resource type="Script" uid="uid://bgths270rmk0s" path="res://ui/upgrade_manager.gd" id="1_sy0ma"]
+[ext_resource type="Texture2D" uid="uid://yc316puhweh5" path="res://assets/upgrade grid lines.png" id="2_sy0ma"]
+
+[node name="upgrade_manager" type="CanvasLayer"]
+script = ExtResource("1_sy0ma")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 704.0
+color = Color(0.1176, 0.19512, 0.24, 1)
+
+[node name="grid" type="Sprite2D" parent="."]
+position = Vector2(192, 128)
+texture = ExtResource("1_p2mtw")
+centered = false
+
+[node name="grid_lines" type="Sprite2D" parent="."]
+position = Vector2(416, 352)
+texture = ExtResource("2_sy0ma")
+
+[node name="menu" type="ScrollContainer" parent="."]
+offset_left = 768.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 640.0
+
+[node name="upgrades_list" type="VBoxContainer" parent="menu"]
+layout_mode = 2
+
+[node name="fake" type="HBoxContainer" parent="menu/upgrades_list"]
+layout_mode = 2
+
+[node name="fake label" type="Label" parent="menu/upgrades_list/fake"]
+layout_mode = 2
+text = "fake 9001"
+metadata/id = 0
+
+[node name="build_button" type="Button" parent="."]
+offset_left = 320.0
+offset_top = 592.0
+offset_right = 512.0
+offset_bottom = 639.0
+text = "Build!"
+
+[connection signal="gui_input" from="menu" to="." method="_on_menu_input"]
+[connection signal="pressed" from="build_button" to="." method="_on_build_button_pressed"]

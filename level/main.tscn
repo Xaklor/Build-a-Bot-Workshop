@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://level/main.gd" id="1_fh3di"]
-[ext_resource type="Texture2D" uid="uid://danfn2f2rmdgr" path="res://assets/basic tileset.png" id="2_epufq"]
+[ext_resource type="Texture2D" uid="uid://b8ggwrul76kgp" path="res://assets/basic tileset.png" id="2_epufq"]
 [ext_resource type="Script" uid="uid://dxxe5j4nvrw4s" path="res://level/tile_map.gd" id="3_ns06i"]
 [ext_resource type="PackedScene" uid="uid://yk7lw74m56a8" path="res://level/claim_indicator.tscn" id="4_epufq"]
 [ext_resource type="PackedScene" uid="uid://cpxpckcp3810l" path="res://buildings/robot_factory.tscn" id="4_npgwh"]
@@ -52,7 +52,6 @@ claim_indicator = ExtResource("4_epufq")
 
 [node name="robot_factory" parent="." instance=ExtResource("4_npgwh")]
 position = Vector2(800, 544)
-robot_scene = ExtResource("5_b6row")
 
 [node name="charger" parent="." instance=ExtResource("6_177d4")]
 position = Vector2(544, 352)
@@ -68,6 +67,9 @@ position = Vector2(672, 544)
 
 [node name="urgle" parent="." instance=ExtResource("9_bypdj")]
 position = Vector2(352, 160)
+
+[node name="urgle2" parent="." instance=ExtResource("9_bypdj")]
+position = Vector2(352, 224)
 
 [node name="bear" parent="." instance=ExtResource("10_mt04e")]
 position = Vector2(352, 544)

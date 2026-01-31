@@ -64,5 +64,4 @@ func _input(event: InputEvent) -> void:
 			2:
 				robot.receive_orders(building, building_pos, repository_target, repository_pos)
 				main.timestop_toggle(true, false)
-				print("starting build!")
 				queue_free()
