@@ -15,20 +15,15 @@ var upgrades: Array[Lib.Upgrade] = [
 	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, -1)], "speed", 400)]
 
 func _ready() -> void:
-	upgrades[0].sprite.texture = load("res://assets/upgrade construction.png")
-	upgrades[1].sprite.texture = load("res://assets/upgrade capacity.png")
-	upgrades[2].sprite.texture = load("res://assets/upgrade energy.png")
-	upgrades[3].sprite.texture = load("res://assets/upgrade health.png")
-	upgrades[4].sprite.texture = load("res://assets/upgrade power.png")
-	upgrades[5].sprite.texture = load("res://assets/upgrade speed.png")
-	upgrades[0].sprite.centered = false
-	upgrades[1].sprite.centered = false
-	upgrades[2].sprite.centered = false
-	upgrades[3].sprite.centered = false
-	upgrades[4].sprite.centered = false
-	upgrades[5].sprite.centered = false
-	upgrades[1].sprite.offset.y = -64
-	upgrades[5].sprite.offset.y = -64
+	upgrades[0].sprite.texture = load("res://assets/upgrade tile construction.png")
+	upgrades[1].sprite.texture = load("res://assets/upgrade tile capacity.png")
+	upgrades[2].sprite.texture = load("res://assets/upgrade tile energy.png")
+	upgrades[3].sprite.texture = load("res://assets/upgrade tile health.png")
+	upgrades[4].sprite.texture = load("res://assets/upgrade tile power.png")
+	upgrades[5].sprite.texture = load("res://assets/upgrade tile speed.png")
+
+	for upgrade in upgrades:
+		upgrade.sprite.centered = false
 
 func _process(delta: float) -> void:
 	var i = 1

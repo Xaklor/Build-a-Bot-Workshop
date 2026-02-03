@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dugx4xcb626r3"]
+[gd_scene load_steps=5 format=3 uid="uid://dugx4xcb626r3"]
 
 [ext_resource type="Texture2D" uid="uid://d4iml72e433ws" path="res://assets/upgrade grid.png" id="1_p2mtw"]
 [ext_resource type="Script" uid="uid://bgths270rmk0s" path="res://ui/upgrade_manager.gd" id="1_sy0ma"]
+[ext_resource type="PackedScene" uid="uid://bcl0g8pgb6225" path="res://ui/part.tscn" id="2_myjmj"]
 [ext_resource type="Texture2D" uid="uid://yc316puhweh5" path="res://assets/upgrade grid lines.png" id="2_sy0ma"]
 
 [node name="upgrade_manager" type="CanvasLayer"]
 script = ExtResource("1_sy0ma")
+part_scene = ExtResource("2_myjmj")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 1280.0
