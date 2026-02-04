@@ -28,16 +28,39 @@ func receive_orders(upgrades: Array[Lib.Upgrade]):
 	main.update_resource("metals", -10)
 	var robot = robot_scene.instantiate()
 	robot.position = tile_map.map_to_local(pos + Vector2i(0, 1))
+	var health = 0
+	var loose_count = 0
 	for upgrade in upgrades:
 		match(upgrade.effect):
 			"health":
-				robot.hp += upgrade.effect_strength
+				if upgrade.loose:
+					loose_count += 1
+					health += upgrade.effect_strength / 2
+				else:
+					health += upgrade.effect_strength
 			"energy":
-				robot.energy += upgrade.effect_strength
+				if upgrade.loose:
+					loose_count += 1
+					robot.energy += upgrade.effect_strength / 2
+				else:
+					robot.energy += upgrade.effect_strength
 			"power":
-				robot.power += upgrade.effect_strength
+				if upgrade.loose:
+					loose_count += 1
+					robot.power += upgrade.effect_strength / 2
+				else:
+					robot.power += upgrade.effect_strength
 			"speed":
-				robot.speed += upgrade.effect_strength
-				
+				if upgrade.loose:
+					loose_count += 1
+					robot.speed += upgrade.effect_strength / 2
+				else:
+					robot.speed += upgrade.effect_strength
+					
+	if loose_count >= 2:
+		robot.hp = max(robot.hp / pow(2, loose_count - 1), 1)
+	else:
+		robot.hp += health
+		
 	main.add_child(robot)
 	

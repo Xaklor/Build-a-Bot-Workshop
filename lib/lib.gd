@@ -5,8 +5,10 @@ class Upgrade:
 	var polyomino: Array[Vector2i]
 	var effect: String
 	var effect_strength: int
+	var loose: bool
 	func _init(sprite: Sprite2D, polyomino: Array[Vector2i], effect: String, effect_strength: int = 0):
 		self.sprite = sprite
 		self.polyomino = polyomino
 		self.effect = effect
 		self.effect_strength = effect_strength
+		self.loose = false
