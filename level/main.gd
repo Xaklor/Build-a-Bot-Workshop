@@ -7,20 +7,32 @@ var metals = 1000
 var gems = 0
 var essence = 0
 var upgrades: Array[Lib.Upgrade] = [
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 1), Vector2i(0, 1), Vector2i(0, 2)], "construction", 10), 
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(2, -1)], "capacity", 10), 
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)], "energy", 100), 
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, 0)], "health", 10), 
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)], "power", 2), 
-	Lib.Upgrade.new(Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, -1)], "speed", 400)]
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, -1), Vector2i(0, 1), Vector2i(1, 0)], "construction", 1), 
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(1, -1)], "capacity", 10), 
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(-1, 0)], "energy", 100), 
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, -1), Vector2i(0, -1)], "health", 10), 
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1)], "power", 2), 
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, -1)], "speed", 400),
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0)], "swim", 0, true),
+	Lib.Upgrade.new(Sprite2D.new(), Sprite2D.new(), [Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(0, -1), Vector2i(1, -1)], "flight", 0, true)]
 
 func _ready() -> void:
-	upgrades[0].sprite.texture = load("res://assets/upgrade tile construction.png")
-	upgrades[1].sprite.texture = load("res://assets/upgrade tile capacity.png")
-	upgrades[2].sprite.texture = load("res://assets/upgrade tile energy.png")
-	upgrades[3].sprite.texture = load("res://assets/upgrade tile health.png")
-	upgrades[4].sprite.texture = load("res://assets/upgrade tile power.png")
-	upgrades[5].sprite.texture = load("res://assets/upgrade tile speed.png")
+	upgrades[0].sprite.texture = load("res://assets/upgrade sprites/upgrade tile construction.png")
+	upgrades[1].sprite.texture = load("res://assets/upgrade sprites/upgrade tile capacity.png")
+	upgrades[2].sprite.texture = load("res://assets/upgrade sprites/upgrade tile energy.png")
+	upgrades[3].sprite.texture = load("res://assets/upgrade sprites/upgrade tile health.png")
+	upgrades[4].sprite.texture = load("res://assets/upgrade sprites/upgrade tile power.png")
+	upgrades[5].sprite.texture = load("res://assets/upgrade sprites/upgrade tile speed.png")
+	upgrades[6].sprite.texture = load("res://assets/upgrade sprites/upgrade tile unique.png")
+	upgrades[7].sprite.texture = load("res://assets/upgrade sprites/upgrade tile unique.png")
+	upgrades[0].mini.texture = load("res://assets/upgrade sprites/upgrade tile construction mini.png")
+	upgrades[1].mini.texture = load("res://assets/upgrade sprites/upgrade tile capacity mini.png")
+	upgrades[2].mini.texture = load("res://assets/upgrade sprites/upgrade tile energy mini.png")
+	upgrades[3].mini.texture = load("res://assets/upgrade sprites/upgrade tile health mini.png")
+	upgrades[4].mini.texture = load("res://assets/upgrade sprites/upgrade tile power mini.png")
+	upgrades[5].mini.texture = load("res://assets/upgrade sprites/upgrade tile speed mini.png")
+	upgrades[6].mini.texture = load("res://assets/upgrade sprites/upgrade tile unique mini.png")
+	upgrades[7].mini.texture = load("res://assets/upgrade sprites/upgrade tile unique mini.png")
 
 	for upgrade in upgrades:
 		upgrade.sprite.centered = false
@@ -29,8 +41,8 @@ func _process(delta: float) -> void:
 	var i = 1
 	for robot in get_tree().get_nodes_in_group("robots"):
 		var ui_element = get_node("hud/VBoxContainer/robot_ui_element" + var_to_str(i))
-		ui_element.get_node("hp").value = robot.hp * 10
-		ui_element.get_node("energy").value = robot.energy
+		ui_element.get_node("hp").value = float(robot.hp) / robot.max_hp * 100
+		ui_element.get_node("energy").value = float(robot.energy) / robot.max_energy * 100
 		if robot.selected:
 			ui_element.get_node("color").color = Color(0xdb879aff)
 		else:

@@ -60,7 +60,17 @@ position = Vector2(544, 352)
 position = Vector2(928, 544)
 
 [node name="mine" parent="." instance=ExtResource("8_pjfo3")]
-position = Vector2(928, 160)
+position = Vector2(736, 160)
+
+[node name="mine2" parent="." instance=ExtResource("8_pjfo3")]
+position = Vector2(864, 160)
+resource = "gems"
+inventory = 200
+
+[node name="mine3" parent="." instance=ExtResource("8_pjfo3")]
+position = Vector2(992, 160)
+resource = "essence"
+inventory = 50
 
 [node name="robot" parent="." instance=ExtResource("5_b6row")]
 position = Vector2(672, 544)

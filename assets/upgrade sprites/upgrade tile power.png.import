@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cktmkjtql8nfa"
-path="res://.godot/imported/upgrade tile energy.png-59ef266bf0cd2c511b14949510164ae5.ctex"
+uid="uid://53vfuq0o4p01"
+path="res://.godot/imported/upgrade tile power.png-559594c4f67e76cbabdd2c44a43f1d6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrade tile energy.png"
-dest_files=["res://.godot/imported/upgrade tile energy.png-59ef266bf0cd2c511b14949510164ae5.ctex"]
+source_file="res://assets/upgrade sprites/upgrade tile power.png"
+dest_files=["res://.godot/imported/upgrade tile power.png-559594c4f67e76cbabdd2c44a43f1d6e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3dxwq30wblcu"
-path="res://.godot/imported/upgrade tile capacity.png-6f2ba3e4a7f94c6781bfaeeb1880f172.ctex"
+uid="uid://cwet6w1adv0up"
+path="res://.godot/imported/upgrade tile capacity mini.png-4e50ff29e8220b25d41dbe29018eab22.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrade tile capacity.png"
-dest_files=["res://.godot/imported/upgrade tile capacity.png-6f2ba3e4a7f94c6781bfaeeb1880f172.ctex"]
+source_file="res://assets/upgrade sprites/upgrade tile capacity mini.png"
+dest_files=["res://.godot/imported/upgrade tile capacity mini.png-4e50ff29e8220b25d41dbe29018eab22.ctex"]
 
 [params]
 

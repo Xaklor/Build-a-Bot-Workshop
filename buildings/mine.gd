@@ -1,10 +1,15 @@
 extends Area2D
 
-@export var inventory = 100
+@export var resource: String = "metals"
+@export var inventory: int = 100
+var max_inventory: int
+
+func _ready() -> void:
+	max_inventory = inventory
 
 func update():
-	$progress_bar.value = inventory
-	if inventory < 100 and inventory > 0:
+	$progress_bar.value = (float(inventory) / float(max_inventory)) * 100
+	if inventory < max_inventory and inventory > 0:
 		$progress_bar.visible = true
 		
 	if inventory <= 0:

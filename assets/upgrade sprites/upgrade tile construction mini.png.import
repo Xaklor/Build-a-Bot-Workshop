@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yc316puhweh5"
-path="res://.godot/imported/upgrade grid lines.png-46cd0e0517d4ba997f88f7f304798f6c.ctex"
+uid="uid://wd0dvwiogqua"
+path="res://.godot/imported/upgrade tile construction mini.png-90d62d8bcfe131ad72c9c201e6f58f59.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrade grid lines.png"
-dest_files=["res://.godot/imported/upgrade grid lines.png-46cd0e0517d4ba997f88f7f304798f6c.ctex"]
+source_file="res://assets/upgrade sprites/upgrade tile construction mini.png"
+dest_files=["res://.godot/imported/upgrade tile construction mini.png-90d62d8bcfe131ad72c9c201e6f58f59.ctex"]
 
 [params]
 

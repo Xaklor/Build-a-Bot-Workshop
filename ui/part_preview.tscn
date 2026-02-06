@@ -1,0 +1,166 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8qd5ur6213y2"]
+
+[ext_resource type="Script" uid="uid://mpwj6suqnxas" path="res://ui/part_preview.gd" id="1_h6whf"]
+[ext_resource type="Texture2D" uid="uid://b6a3sg8a416ma" path="res://assets/upgrade sprites/preview background.png" id="1_hxug7"]
+[ext_resource type="Texture2D" uid="uid://bk3njifwjsjui" path="res://assets/upgrade sprites/upgrade tile unique mini.png" id="1_t5bcr"]
+
+[node name="part_preview" type="ColorRect"]
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+mouse_filter = 2
+script = ExtResource("1_h6whf")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(24, 24)
+texture = ExtResource("1_hxug7")
+
+[node name="0" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, 4)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="1" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, 4)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(20, 4)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="3" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(28, 4)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="4" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(36, 4)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="5" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, 12)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="6" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, 12)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="7" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(20, 12)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="8" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(28, 12)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="9" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(36, 12)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="10" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, 20)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="11" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, 20)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="12" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(20, 20)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="13" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(28, 20)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="14" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(36, 20)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="15" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, 28)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="16" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, 28)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="17" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(20, 28)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="18" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(28, 28)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="19" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(36, 28)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="20" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4, 36)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="21" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(12, 36)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="22" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(20, 36)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="23" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(28, 36)
+texture = ExtResource("1_t5bcr")
+centered = false
+
+[node name="24" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(36, 36)
+texture = ExtResource("1_t5bcr")
+centered = false

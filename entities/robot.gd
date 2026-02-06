@@ -16,8 +16,8 @@ var status: state = state.IDLE
 var path: Array[Vector2i]
 var selected = false
 var stopped = false
-var mobility = "land"
-var item = 0
+var item: String = ""
+var item_amount: int = 0
 var claimed_pos: Vector2i
 var harvest_target: Node2D
 var harvest_pos: Vector2i
@@ -25,9 +25,14 @@ var repository_target: Node2D
 var repository_pos: Vector2i
 var build_target: String = ""
 var build_pos: Vector2i
+var max_hp = 10
 var hp = 10
 var power = 1
+var max_energy = 100
 var energy = 100
+var build_speed = 1
+var capacity = 10
+var unique_upgrades: Array[String]
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
@@ -77,13 +82,13 @@ func _process(delta):
 		# THIRD:
 		# if recharging or idle and standing on a charger, gain energy
 		##############################################################
-		elif (status == state.RECHARGING or status == state.IDLE) and energy < 100 and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
+		elif (status == state.RECHARGING or status == state.IDLE) and energy < max_energy and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
 			energy += 1
-			if energy >= 100:
+			if energy >= max_energy:
 				# if we were in the middle of harvesting, return to harvesting instead of idle
 				if harvest_target != null:
 					status = state.HARVESTING
-					if item == 1:
+					if item_amount > 0:
 						path = navigate(repository_pos)
 						if !path.is_empty():
 							update_claimed_position(repository_pos)
@@ -103,7 +108,7 @@ func _process(delta):
 		# FOURTH:
 		# if assigned a build and missing materials, go pick them up
 		############################################################
-		elif status == state.BUILDING and item == 0 and claimed_pos != repository_pos:
+		elif status == state.BUILDING and item_amount == 0 and claimed_pos != repository_pos:
 			path = navigate(repository_pos)
 			if not path.is_empty():
 				update_claimed_position(repository_pos)
@@ -112,15 +117,16 @@ func _process(delta):
 		# FIFTH:
 		# if assigned a build and standing on the repository, pick up the materials
 		###########################################################################
-		elif status == state.BUILDING and item == 0 and claimed_pos == repository_pos:
-			item = 1
+		elif status == state.BUILDING and item_amount == 0 and claimed_pos == repository_pos:
+			item = "metals"
+			item_amount = 10
 			main.update_resource("metals", -10)
 				
 		###############################################################################
 		# SIXTH:
 		# if assigned a build and holding materials but not at the site, go to the site
 		###############################################################################
-		elif status == state.BUILDING and item == 1 and claimed_pos != build_pos:
+		elif status == state.BUILDING and item_amount > 0 and claimed_pos != build_pos:
 			path = navigate(build_pos)
 			if not path.is_empty():
 				update_claimed_position(build_pos)
@@ -129,9 +135,11 @@ func _process(delta):
 		# SEVENTH:
 		# if assigned a build and at the build site, make progress
 		##########################################################
-		elif status == state.BUILDING and item == 1 and claimed_pos == build_pos:
-			$work_bar.value += 0.5
+		elif status == state.BUILDING and item_amount > 0 and claimed_pos == build_pos:
+			$work_bar.value += build_speed
 			if $work_bar.value >= 100:
+				item = ""
+				item_amount = 0
 				var b
 				match build_target:
 					"repository": b = preload("res://buildings/repository.tscn").instantiate()
@@ -166,9 +174,10 @@ func _process(delta):
 		# if harvesting and standing on a harvestable object, bring item to repository
 		##############################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x.has_meta("harvestable") and x.get_meta("harvestable")):
-			harvest_target.inventory -= 20
+			item = harvest_target.resource
+			item_amount = min(capacity, harvest_target.inventory)
+			harvest_target.inventory -= item_amount
 			harvest_target.update()
-			item = 1
 			path = navigate(repository_pos)
 			if not path.is_empty():
 				update_claimed_position(repository_pos)
@@ -178,8 +187,9 @@ func _process(delta):
 		# if harvesting and standing on a repository, insert item and fetch more
 		########################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x == repository_target):
-			main.update_resource("metals", 10)
-			item = 0
+			main.update_resource(item, item_amount)
+			item = ""
+			item_amount = 0
 			if harvest_target.inventory > 0:
 				path = navigate(harvest_pos)
 				if not path.is_empty():
@@ -189,10 +199,10 @@ func _process(delta):
 				harvest_target = null
 				repository_target = null
 				
-		##############################################################
+		##################################
 		# ELEVENTH: 
-		# if idle and holding a ranged weapon, attack enemies in range
-		##############################################################
+		# if idle, attack enemies in range
+		##################################
 		elif status == state.IDLE and $attack_cooldown.time_left <= 0:
 			var enemy_list = get_tree().get_nodes_in_group("enemies")
 			for enemy in enemy_list:
@@ -228,16 +238,6 @@ func _on_menu_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc"):
 		get_viewport().set_input_as_handled()
 		match $menu.current_tab:
-			0:
-				if $menu/upgrade/MarginContainer1/land_row/ColorRect.get_rect().has_point($menu/upgrade/MarginContainer1/land_row.get_local_mouse_position()):
-					mobility = "land"
-					$color.color = 0xc74462ff
-				if $menu/upgrade/MarginContainer2/water_row/ColorRect.get_rect().has_point($menu/upgrade/MarginContainer2/water_row.get_local_mouse_position()):
-					mobility = "water"
-					$color.color = 0x78b2f8ff
-				if $menu/upgrade/MarginContainer3/flight_row/ColorRect.get_rect().has_point($menu/upgrade/MarginContainer3/flight_row.get_local_mouse_position()):
-					mobility = "flight"
-					$color.color = 0xebd680ff
 			1:
 				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/repository.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
 					start_build_manager("repository")
@@ -256,15 +256,16 @@ func update_claimed_position(pos: Vector2i):
 # returns shortest path to the target position if possible, takes grid coords
 func navigate(target):
 	var out: Array[Vector2i] = []
-	if tile_map.is_point_walkable(target, mobility):
-		match mobility:
-			"land":
-				out = tile_map.land_astar.get_id_path(tile_map.local_to_map(global_position),	target).slice(1)
-			"water":
-				out = tile_map.water_astar.get_id_path(tile_map.local_to_map(global_position),	target).slice(1)
-			"flight":
-				out = tile_map.flight_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
-					
+	if "flight" in unique_upgrades:
+		if tile_map.is_point_walkable(target, "flight"):
+			out = tile_map.flight_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+	elif "swim" in unique_upgrades:
+		if tile_map.is_point_walkable(target, "water"):
+			out = tile_map.water_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+	else:
+		if tile_map.is_point_walkable(target, "land"):
+			out = tile_map.land_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+
 	return out
 	
 func start_build_manager(building: String):

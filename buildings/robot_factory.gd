@@ -24,43 +24,18 @@ func _unhandled_input(event: InputEvent) -> void:
 			manager.factory = self
 			main.add_child(manager)
 
-func receive_orders(upgrades: Array[Lib.Upgrade]):
+func receive_orders(stats: Array[int], uniques: Array[String]):
 	main.update_resource("metals", -10)
 	var robot = robot_scene.instantiate()
 	robot.position = tile_map.map_to_local(pos + Vector2i(0, 1))
-	var health = 0
-	var loose_count = 0
-	for upgrade in upgrades:
-		match(upgrade.effect):
-			"health":
-				if upgrade.loose:
-					loose_count += 1
-					health += upgrade.effect_strength / 2
-				else:
-					health += upgrade.effect_strength
-			"energy":
-				if upgrade.loose:
-					loose_count += 1
-					robot.energy += upgrade.effect_strength / 2
-				else:
-					robot.energy += upgrade.effect_strength
-			"power":
-				if upgrade.loose:
-					loose_count += 1
-					robot.power += upgrade.effect_strength / 2
-				else:
-					robot.power += upgrade.effect_strength
-			"speed":
-				if upgrade.loose:
-					loose_count += 1
-					robot.speed += upgrade.effect_strength / 2
-				else:
-					robot.speed += upgrade.effect_strength
-					
-	if loose_count >= 2:
-		robot.hp = max(robot.hp / pow(2, loose_count - 1), 1)
-	else:
-		robot.hp += health
-		
+	robot.hp += stats[0]
+	robot.max_hp += stats[0]
+	robot.energy += stats[1]
+	robot.max_energy += stats[1]
+	robot.power += stats[2]
+	robot.speed += stats[3]
+	robot.capacity += stats[4]
+	robot.build_speed += stats[5]
+	robot.unique_upgrades = uniques
 	main.add_child(robot)
 	

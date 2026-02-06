@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmr3ajfnkr2h8"
-path="res://.godot/imported/upgrade tileset simple.png-ab768f23c544a5d27292c2199e819103.ctex"
+uid="uid://h7r0ldoyetaf"
+path="res://.godot/imported/upgrade tileset full.png-cbc75d009451525809d4585822dfe5ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/upgrade tileset simple.png"
-dest_files=["res://.godot/imported/upgrade tileset simple.png-ab768f23c544a5d27292c2199e819103.ctex"]
+source_file="res://assets/upgrade sprites/upgrade tileset full.png"
+dest_files=["res://.godot/imported/upgrade tileset full.png-cbc75d009451525809d4585822dfe5ea.ctex"]
 
 [params]
 
