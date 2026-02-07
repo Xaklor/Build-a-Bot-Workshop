@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vrxw0"]
 size = Vector2(64, 64)
 
-[node name="robot_factory" type="Area2D" groups=["buildings"]]
+[node name="robot_factory" type="Area2D" groups=["buildings", "factories"]]
 script = ExtResource("1_p4cd4")
 robot_scene = ExtResource("2_d0n6v")
 upgrade_manager = ExtResource("3_5gk05")

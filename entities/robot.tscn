@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://vww06adkxjjq"]
+[gd_scene load_steps=6 format=3 uid="uid://vww06adkxjjq"]
 
 [ext_resource type="Script" uid="uid://4lccil06vgh1" path="res://entities/robot.gd" id="1_br0rw"]
 [ext_resource type="PackedScene" uid="uid://dshpdwdjn7gvl" path="res://ui/build_manager.tscn" id="2_8mpls"]
+[ext_resource type="PackedScene" uid="uid://dugx4xcb626r3" path="res://ui/upgrade_manager.tscn" id="3_l8ivr"]
 [ext_resource type="Texture2D" uid="uid://4g45lua0yax0" path="res://assets/robot.png" id="3_poxae"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl0xr"]
@@ -11,6 +12,7 @@ size = Vector2(60, 60)
 process_mode = 1
 script = ExtResource("1_br0rw")
 build_manager = ExtResource("2_8mpls")
+upgrade_manager = ExtResource("3_l8ivr")
 
 [node name="hitbox" type="CollisionShape2D" parent="."]
 visible = false
@@ -90,73 +92,20 @@ current_tab = 0
 
 [node name="upgrade" type="VBoxContainer" parent="menu"]
 layout_mode = 2
+alignment = 1
 metadata/_tab_index = 0
 
-[node name="MarginContainer1" type="MarginContainer" parent="menu/upgrade"]
+[node name="upgrade_button" type="Button" parent="menu/upgrade"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
+text = "Open Upgrades"
 
-[node name="land_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer1"]
+[node name="upgrade_label" type="Label" parent="menu/upgrade"]
 layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer1/land_row"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-color = Color(0.780392, 0.266667, 0.384314, 1)
-
-[node name="Label" type="Label" parent="menu/upgrade/MarginContainer1/land_row"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Land Only"
-
-[node name="MarginContainer2" type="MarginContainer" parent="menu/upgrade"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="water_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer2"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer2/water_row"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-color = Color(0.470588, 0.698039, 0.972549, 1)
-
-[node name="Label" type="Label" parent="menu/upgrade/MarginContainer2/water_row"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Swim Upgrade"
-
-[node name="MarginContainer3" type="MarginContainer" parent="menu/upgrade"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 10
-
-[node name="flight_row" type="HBoxContainer" parent="menu/upgrade/MarginContainer3"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ColorRect" type="ColorRect" parent="menu/upgrade/MarginContainer3/flight_row"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 1
-color = Color(0.921569, 0.839216, 0.501961, 1)
-
-[node name="Label" type="Label" parent="menu/upgrade/MarginContainer3/flight_row"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Flight Upgrade"
+text = "Robot must be 
+standing on
+Factory output"
+horizontal_alignment = 1
 
 [node name="build" type="VBoxContainer" parent="menu"]
 visible = false
@@ -194,3 +143,4 @@ layout_mode = 2
 text = "Mine"
 
 [connection signal="gui_input" from="menu" to="." method="_on_menu_input"]
+[connection signal="pressed" from="menu/upgrade/upgrade_button" to="." method="_on_upgrade_button_pressed"]

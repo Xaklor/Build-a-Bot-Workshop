@@ -24,7 +24,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			manager.factory = self
 			main.add_child(manager)
 
-func receive_orders(stats: Array[int], uniques: Array[String]):
+func receive_orders(stats: Array[int], uniques: Array[String], parts: Array[Part]):
 	main.update_resource("metals", -10)
 	var robot = robot_scene.instantiate()
 	robot.position = tile_map.map_to_local(pos + Vector2i(0, 1))
@@ -37,5 +37,7 @@ func receive_orders(stats: Array[int], uniques: Array[String]):
 	robot.capacity += stats[4]
 	robot.build_speed += stats[5]
 	robot.unique_upgrades = uniques
+	for part in parts:
+		robot.equipped_parts.append(part.clone())
 	main.add_child(robot)
 	

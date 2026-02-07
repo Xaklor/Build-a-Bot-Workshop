@@ -29,6 +29,7 @@ chargers=""
 indicators=""
 entities=""
 buildings=""
+factories=""
 
 [input]
 

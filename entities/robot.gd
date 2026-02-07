@@ -2,6 +2,7 @@ class_name Robot extends Area2D
 
 @export var speed = 400
 @export var build_manager: PackedScene
+@export var upgrade_manager: PackedScene
 @onready var tile_map: TileMapLayer = get_tree().get_root().get_node("main").get_node("tile_map")
 @onready var main = get_tree().get_root().get_node("main")
 
@@ -12,6 +13,7 @@ enum state {
 	BUILDING
 }
 
+var facing: bool = false
 var status: state = state.IDLE
 var path: Array[Vector2i]
 var selected = false
@@ -33,6 +35,7 @@ var energy = 100
 var build_speed = 1
 var capacity = 10
 var unique_upgrades: Array[String]
+var equipped_parts: Array[Part]
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
@@ -48,10 +51,10 @@ func _process(delta):
 		$sprite/select_highlight.visible = selected
 		$work_bar.visible = $work_bar.value > 0
 
-		#############################################################		
+		##############################################################
 		# FIRST:
 		# if low on energy and a charger is in range, start recharging
-		#############################################################
+		##############################################################
 		if energy <= 20 and (status != state.RECHARGING or (status == state.RECHARGING and path.is_empty())):
 			var charger_list = get_tree().get_nodes_in_group("chargers")
 			var charger_pos = tile_map.local_to_map(charger_list[0].position)
@@ -67,7 +70,14 @@ func _process(delta):
 		########################################
 		if not path.is_empty():
 			var target = tile_map.map_to_local(path[0])
-			global_position = global_position.move_toward(target, speed * delta)
+			var new_position = global_position.move_toward(target, speed * delta)
+			if new_position.x - global_position.x < 0 and not facing:
+				$sprite.flip_h = true
+				facing = true
+			elif new_position.x - global_position.x > 0 and facing:
+				$sprite.flip_h = false
+				facing = false
+			global_position = new_position
 			
 			# if we've reached the point, remove it from the path
 			if global_position == target:
@@ -237,16 +247,15 @@ func _on_menu_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 	if Input.is_action_just_pressed("lc"):
 		get_viewport().set_input_as_handled()
-		match $menu.current_tab:
-			1:
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/repository.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
-					start_build_manager("repository")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/factory.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
-					start_build_manager("factory")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/charger.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
-					start_build_manager("charger")
-				if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/mine.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
-					start_build_manager("mine")
+		if $menu.current_tab == 1:
+			if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/repository.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
+				start_build_manager("repository")
+			if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/factory.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
+				start_build_manager("factory")
+			if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/charger.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
+				start_build_manager("charger")
+			if $menu/build/MarginContainer/ScrollContainer/VBoxContainer/mine.get_rect().has_point($menu/build/MarginContainer/ScrollContainer.get_local_mouse_position()) and main.metals >= 10:
+				start_build_manager("mine")
 
 func update_claimed_position(pos: Vector2i):
 	tile_map.claim_pos(claimed_pos, false)
@@ -295,3 +304,27 @@ func take_damage(damage: int):
 func _on_timestop(b: bool):
 	stopped = b
 	$attack_cooldown.paused = b
+
+func _on_upgrade_button_pressed() -> void:
+	var factory_list = get_tree().get_nodes_in_group("factories")
+	for factory in factory_list:
+		if factory.position == self.position + Vector2(0, -64):
+			var manager = upgrade_manager.instantiate()
+			manager.robot = self
+			main.add_child(manager)
+			manager.insert_parts(equipped_parts)
+	$menu.visible = false
+	
+func update_upgrades(stats: Array[int], uniques: Array[String], parts: Array[Part]):
+	max_hp = 10 + stats[0]
+	hp = min(hp, max_hp)
+	max_energy = 100 + stats[1]
+	energy = min(energy, max_energy)
+	power = 1 + stats[2]
+	speed = 400 + stats[3]
+	capacity = 10 + stats[4]
+	build_speed = 1 + stats[5]
+	unique_upgrades = uniques
+	equipped_parts = []
+	for part in parts:
+		equipped_parts.append(part.clone())

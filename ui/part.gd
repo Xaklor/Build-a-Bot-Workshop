@@ -8,3 +8,11 @@ func _input(event: InputEvent) -> void:
 		for child in get_children():
 			if child.get_rect().has_point(child.get_local_mouse_position()):
 				get_parent()._on_slotted_part_clicked(self)
+
+func clone() -> Part:
+	var new = Part.new()
+	new.upgrade = upgrade
+	new.grid_pos = grid_pos
+	for child in get_children():
+		new.add_child(child)
+	return new

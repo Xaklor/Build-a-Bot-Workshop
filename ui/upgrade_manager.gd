@@ -12,9 +12,10 @@ var held_part: Part
 var slotted_upgrades: Array[Lib.Upgrade]
 var slotted_parts: Array[Part]
 var EFFECT_LOOKUP: Dictionary[String, int] = {"health": 0, "energy": 1, "power": 2, "speed": 3, "capacity": 4, "construction": 5}
-var stat_changes: Array[int]
+var stat_changes: Array[int] = [0, 0, 0, 0, 0, 0]
 var unique_changes: Array[String]
 var factory: Factory
+var robot: Robot
 
 func _ready() -> void:
 	main.timestop_toggle(true, true)
@@ -104,7 +105,10 @@ func _on_menu_input(event: InputEvent) -> void:
 				add_child(held_part)
 
 func _on_build_button_pressed() -> void:
-	factory.receive_orders(stat_changes, unique_changes)
+	if robot == null:
+		factory.receive_orders(stat_changes, unique_changes, slotted_parts)
+	else:
+		robot.update_upgrades(stat_changes, unique_changes, slotted_parts)
 	main.timestop_toggle(true, false)
 	queue_free()
 
@@ -151,3 +155,17 @@ func update_slotted_upgrades_display():
 		var label = Label.new()
 		label.text = unique.capitalize()
 		$uniques_menu/uniques_list.add_child(label)
+		
+func insert_parts(parts: Array[Part]):
+	for part in parts:
+		slotted_parts.append(part)
+		slotted_upgrades.append(part.upgrade)
+		part.position = (Vector2(part.grid_pos) * tile_grid.cell_size) + $grid.position
+		for point in part.upgrade.polyomino:
+			var temp = part.upgrade.sprite.duplicate()
+			temp.position = point * 64
+			part.add_child(temp)
+			tile_grid.set_point_solid(part.grid_pos + point)
+
+		add_child(part)
+	update_slotted_upgrades_display()
