@@ -39,5 +39,5 @@ func receive_orders(stats: Array[int], uniques: Array[String], parts: Array[Part
 	robot.unique_upgrades = uniques
 	for part in parts:
 		robot.equipped_parts.append(part.clone())
-	main.add_child(robot)
+	main.get_node("robots").add_child(robot)
 	

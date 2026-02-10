@@ -33,22 +33,26 @@ func _ready() -> void:
 	upgrades[5].mini.texture = load("res://assets/upgrade sprites/upgrade tile speed mini.png")
 	upgrades[6].mini.texture = load("res://assets/upgrade sprites/upgrade tile unique mini.png")
 	upgrades[7].mini.texture = load("res://assets/upgrade sprites/upgrade tile unique mini.png")
-
+	upgrades.sort_custom(Lib.upgrade_comparator)
 	for upgrade in upgrades:
 		upgrade.sprite.centered = false
 
 func _process(delta: float) -> void:
 	var i = 1
-	for robot in get_tree().get_nodes_in_group("robots"):
+	var robots = $robots.get_children()
+	var ordering = range(robots.size())
+	ordering.sort_custom(func(a, b): return robots[a].position.y < robots[b].position.y)
+	for idx in range(robots.size()):
 		var ui_element = get_node("hud/VBoxContainer/robot_ui_element" + var_to_str(i))
-		ui_element.get_node("hp").value = float(robot.hp) / robot.max_hp * 100
-		ui_element.get_node("energy").value = float(robot.energy) / robot.max_energy * 100
-		if robot.selected:
+		ui_element.get_node("hp").value = float(robots[idx].hp) / robots[idx].max_hp * 100
+		ui_element.get_node("energy").value = float(robots[idx].energy) / robots[idx].max_energy * 100
+		if robots[idx].selected:
 			ui_element.get_node("color").color = Color(0xdb879aff)
 		else:
-			ui_element.get_node("color").color = Color(0xc74462ff)
-	
+			ui_element.get_node("color").color = Color(0xc74462ff)	
 		i += 1
+		$robots.move_child(robots[idx], ordering[idx])
+	
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("timestop"):

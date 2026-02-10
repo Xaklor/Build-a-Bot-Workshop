@@ -1,5 +1,20 @@
 class_name Lib
 
+const UNIQUE_ORDERING = ["swim", "flight"]
+const EFFECT_ORDERING = ["health", "energy", "power", "speed", "capacity", "construction"]
+# return true if a comes before b, false otherwise
+static func upgrade_comparator(a: Upgrade, b: Upgrade):
+	if a.unique and not b.unique:
+		return true
+	elif b.unique and not a.unique:
+		return false
+	elif a.unique and b.unique:
+		return UNIQUE_ORDERING.find(a.effect) < UNIQUE_ORDERING.find(b.effect)
+	elif a.effect != b.effect:
+		return EFFECT_ORDERING.find(a.effect) < EFFECT_ORDERING.find(b.effect)
+	else:
+		return a.effect_strength > b.effect_strength
+
 class Upgrade:
 	var sprite: Sprite2D
 	var mini: Sprite2D

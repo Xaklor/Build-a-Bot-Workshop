@@ -3,24 +3,27 @@ extends CanvasLayer
 @onready var main = get_tree().get_root().get_node("main")
 @export var part_scene: PackedScene
 @export var preview_scene: PackedScene
+const LEFT: Transform2D = Transform2D(Vector2(0, -1), Vector2(1, 0), Vector2(0, 0))
+const RIGHT: Transform2D = Transform2D(Vector2(0, 1), Vector2(-1, 0), Vector2(0, 0))
+const EFFECT_LOOKUP: Dictionary[String, int] = {"health": 0, "energy": 1, "power": 2, "speed": 3, "capacity": 4, "construction": 5}
+
 var tile_grid: AStarGrid2D = AStarGrid2D.new()
-var LEFT: Transform2D = Transform2D(Vector2(0, -1), Vector2(1, 0), Vector2(0, 0))
-var RIGHT: Transform2D = Transform2D(Vector2(0, 1), Vector2(-1, 0), Vector2(0, 0))
 var grid_pos: Vector2i
-var upgrades: Array[Lib.Upgrade]
+var upgrades: Dictionary[int, Lib.Upgrade]
+var next_id: int
 var held_part: Part
 var slotted_upgrades: Array[Lib.Upgrade]
 var slotted_parts: Array[Part]
-var EFFECT_LOOKUP: Dictionary[String, int] = {"health": 0, "energy": 1, "power": 2, "speed": 3, "capacity": 4, "construction": 5}
 var stat_changes: Array[int] = [0, 0, 0, 0, 0, 0]
 var unique_changes: Array[String]
+
 var factory: Factory
 var robot: Robot
 
 func _ready() -> void:
 	main.timestop_toggle(true, true)
 	var fake: Array[Vector2i] = [Vector2i(0, -1), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]
-	$"menu/upgrades_list/fake/fake preview".initialize(fake, load("res://assets/upgrade sprites/upgrade tile unique mini.png"))
+	# $"menu/upgrades_list/fake/fake preview".initialize(fake, load("res://assets/upgrade sprites/upgrade tile unique mini.png"))
 	
 	var grid_size = $grid.get_rect().end - $grid.get_rect().position
 	tile_grid.region = Rect2i(Vector2i.ZERO, grid_size / 64)
@@ -29,17 +32,9 @@ func _ready() -> void:
 	
 	for idx in range(main.upgrades.size()):
 		var upgrade = main.upgrades[idx]
-		upgrades.append(upgrade)
-		var entry = HBoxContainer.new()
-		var preview = preview_scene.instantiate()
-		var label = Label.new()
-		preview.initialize(upgrade.polyomino, upgrade.mini.texture)
-		label.text = upgrade.effect + " " + str(upgrade.effect_strength)
-		entry.add_theme_constant_override("separation", 10)
-		entry.add_child(preview)
-		entry.add_child(label)
-		entry.set_meta("id", idx)
-		$menu/upgrades_list.add_child(entry)
+		upgrades[idx] = upgrade
+		$menu/upgrades_list.add_child(create_upgrade_list_entry(upgrade))
+		next_id += 1
 		
 func _process(delta: float) -> void:
 	if held_part != null:
@@ -50,6 +45,7 @@ func _process(delta: float) -> void:
 		held_part.grid_pos = grid_pos
 	
 func _input(event: InputEvent) -> void:
+	# rotate held part
 	if Input.is_action_pressed("scroll_down") and held_part != null:
 		for i in range(held_part.upgrade.polyomino.size()):
 			held_part.upgrade.polyomino[i] = Vector2i(LEFT * Vector2(held_part.upgrade.polyomino[i]))
@@ -58,9 +54,23 @@ func _input(event: InputEvent) -> void:
 		for i in range(held_part.upgrade.polyomino.size()):
 			held_part.upgrade.polyomino[i] = Vector2i(RIGHT * Vector2(held_part.upgrade.polyomino[i]))
 			held_part.get_child(i).position = held_part.upgrade.polyomino[i] * 64
+	# release held part
 	if Input.is_action_just_pressed("rc") and held_part != null:
+		upgrades[next_id] = held_part.upgrade
+		$menu/upgrades_list.add_child(create_upgrade_list_entry(held_part.upgrade))
+		var upgrades_list_children = $menu/upgrades_list.get_children()
+		var idx = upgrades_list_children.size() - 2
+		while idx >= 0 and Lib.upgrade_comparator(
+			upgrades[upgrades_list_children[upgrades_list_children.size() - 1].get_meta("id")], 
+			upgrades[upgrades_list_children[idx].get_meta("id")]
+			):
+			idx -= 1
+		print(idx)
+		$menu/upgrades_list.move_child(upgrades_list_children[upgrades_list_children.size() - 1], idx + 1)
+		next_id += 1
 		held_part.queue_free()
 		held_part = null
+	# place held part
 	if Input.is_action_just_pressed("lc"):
 		if held_part != null and tile_grid.region.has_point(grid_pos):
 			var valid = true
@@ -86,6 +96,7 @@ func _input(event: InputEvent) -> void:
 				held_part = null
 
 func _on_menu_input(event: InputEvent) -> void:
+	# pick up new held part
 	if Input.is_action_just_pressed("lc"):
 		get_viewport().set_input_as_handled()
 		for entry in $menu/upgrades_list.get_children():
@@ -95,6 +106,8 @@ func _on_menu_input(event: InputEvent) -> void:
 				
 				var part = part_scene.instantiate()
 				part.upgrade = upgrades[entry.get_meta("id")]
+				upgrades.erase(entry.get_meta("id"))
+				$menu/upgrades_list.remove_child(entry)
 				for point in part.upgrade.polyomino:
 					var temp = part.upgrade.sprite.duplicate()
 					temp.position = point * 64
@@ -105,10 +118,14 @@ func _on_menu_input(event: InputEvent) -> void:
 				add_child(held_part)
 
 func _on_build_button_pressed() -> void:
+	# close the upgrade menu
 	if robot == null:
 		factory.receive_orders(stat_changes, unique_changes, slotted_parts)
 	else:
 		robot.update_upgrades(stat_changes, unique_changes, slotted_parts)
+	main.upgrades.clear()
+	for upgrade in upgrades.values():
+		main.upgrades.append(upgrade)
 	main.timestop_toggle(true, false)
 	queue_free()
 
@@ -169,3 +186,15 @@ func insert_parts(parts: Array[Part]):
 
 		add_child(part)
 	update_slotted_upgrades_display()
+	
+func create_upgrade_list_entry(upgrade: Lib.Upgrade):
+	var entry = HBoxContainer.new()
+	var preview = preview_scene.instantiate()
+	var label = Label.new()
+	preview.initialize(upgrade.polyomino, upgrade.mini.texture)
+	label.text = upgrade.effect + " " + str(upgrade.effect_strength)
+	entry.add_theme_constant_override("separation", 10)
+	entry.add_child(preview)
+	entry.add_child(label)
+	entry.set_meta("id", next_id)
+	return entry

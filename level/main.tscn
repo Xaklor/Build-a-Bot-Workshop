@@ -72,9 +72,6 @@ position = Vector2(992, 160)
 resource = "essence"
 inventory = 50
 
-[node name="robot" parent="." instance=ExtResource("5_b6row")]
-position = Vector2(672, 544)
-
 [node name="urgle" parent="." instance=ExtResource("9_bypdj")]
 position = Vector2(352, 160)
 
@@ -83,6 +80,11 @@ position = Vector2(352, 224)
 
 [node name="bear" parent="." instance=ExtResource("10_mt04e")]
 position = Vector2(352, 544)
+
+[node name="robots" type="Node2D" parent="."]
+
+[node name="robot" parent="robots" instance=ExtResource("5_b6row")]
+position = Vector2(672, 544)
 
 [node name="hud" parent="." instance=ExtResource("11_wlkra")]
 
@@ -95,3 +97,4 @@ color = Color(0.137, 0.137, 0.137, 0.359)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
+[connection signal="child_entered_tree" from="robots" to="." method="_on_child_entered_tree"]
