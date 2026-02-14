@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://bhmq5f3vg5p5e"]
+[gd_scene load_steps=17 format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://level/main.gd" id="1_fh3di"]
 [ext_resource type="Texture2D" uid="uid://b8ggwrul76kgp" path="res://assets/basic tileset.png" id="2_epufq"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://vww06adkxjjq" path="res://entities/robot.tscn" id="5_b6row"]
 [ext_resource type="PackedScene" uid="uid://cpcbaamwkrmdy" path="res://buildings/charger.tscn" id="6_177d4"]
 [ext_resource type="PackedScene" uid="uid://diahunbpiy6p0" path="res://buildings/repository.tscn" id="7_i7a4y"]
+[ext_resource type="PackedScene" uid="uid://d34mqdeyal0gm" path="res://buildings/workshop.tscn" id="8_ns06i"]
 [ext_resource type="PackedScene" uid="uid://cxkjehvkb3ect" path="res://buildings/mine.tscn" id="8_pjfo3"]
 [ext_resource type="PackedScene" uid="uid://dtm6rytj8v23a" path="res://entities/urgle.tscn" id="9_bypdj"]
 [ext_resource type="PackedScene" uid="uid://221hpelvs8kh" path="res://entities/bear.tscn" id="10_mt04e"]
@@ -58,6 +59,9 @@ position = Vector2(544, 352)
 
 [node name="repository" parent="." instance=ExtResource("7_i7a4y")]
 position = Vector2(928, 544)
+
+[node name="workshop" parent="." instance=ExtResource("8_ns06i")]
+position = Vector2(736, 352)
 
 [node name="mine" parent="." instance=ExtResource("8_pjfo3")]
 position = Vector2(736, 160)

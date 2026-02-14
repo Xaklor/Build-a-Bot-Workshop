@@ -26,7 +26,6 @@ position = Vector2(416, 352)
 texture = ExtResource("4_e5t5k")
 
 [node name="fake" type="HBoxContainer" parent="."]
-visible = false
 offset_left = 768.0
 offset_top = 64.0
 offset_right = 901.0

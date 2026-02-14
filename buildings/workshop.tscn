@@ -1,0 +1,114 @@
+[gd_scene load_steps=3 format=3 uid="uid://d34mqdeyal0gm"]
+
+[ext_resource type="Script" uid="uid://d3qmo18rf1tee" path="res://buildings/workshop.gd" id="1_iu5s1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ht8bb"]
+size = Vector2(64, 64)
+
+[node name="workshop" type="Area2D" groups=["buildings"]]
+script = ExtResource("1_iu5s1")
+
+[node name="hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ht8bb")
+
+[node name="color" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 1
+color = Color(0.463104, 0.351052, 0.108495, 1)
+
+[node name="build_pad" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = 32.0
+offset_right = 32.0
+offset_bottom = 96.0
+mouse_filter = 2
+color = Color(0.290196, 0.219608, 0.0705882, 1)
+
+[node name="shadow" type="ColorRect" parent="."]
+offset_left = -24.0
+offset_top = 16.0
+offset_right = 24.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.29, 0.220207, 0.0696, 1)
+
+[node name="highlight" type="ColorRect" parent="."]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(0.73, 0.572807, 0.1752, 1)
+
+[node name="menu" type="TabContainer" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = -112.0
+offset_right = 384.0
+offset_bottom = 128.0
+current_tab = 0
+
+[node name="parts" type="MarginContainer" parent="menu"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 0
+
+[node name="scroll_container" type="ScrollContainer" parent="menu/parts"]
+layout_mode = 2
+
+[node name="parts_list" type="VBoxContainer" parent="menu/parts/scroll_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="row" type="HBoxContainer" parent="menu/parts/scroll_container/parts_list"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="menu/parts/scroll_container/parts_list/row"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="menu/parts/scroll_container/parts_list/row"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="menu/parts/scroll_container/parts_list/row/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "M"
+
+[node name="Label3" type="Label" parent="menu/parts/scroll_container/parts_list/row/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "G"
+
+[node name="Label4" type="Label" parent="menu/parts/scroll_container/parts_list/row/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "E"
+
+[node name="queue" type="MarginContainer" parent="menu"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 1
+
+[node name="scroll_container" type="ScrollContainer" parent="menu/queue"]
+layout_mode = 2
+
+[node name="queue_list" type="VBoxContainer" parent="menu/queue/scroll_container"]
+layout_mode = 2
+
+[connection signal="gui_input" from="menu/parts/scroll_container/parts_list" to="." method="_on_parts_click"]
+[connection signal="gui_input" from="menu/queue/scroll_container" to="." method="_on_queue_click"]
