@@ -1,0 +1,1166 @@
+[
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "Speed Lv 1",
+		"effect": "speed",
+		"effect_strength": 400,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile speed mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile speed.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				1,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "HP Lv 1",
+		"effect": "health",
+		"effect_strength": 10,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile health mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile health.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				0,
+				0
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "Energy Lv 1",
+		"effect": "energy",
+		"effect_strength": 100,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile energy mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile energy.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				0,
+				1,
+				0
+			],
+			[
+				1,
+				0,
+				1,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				1,
+				2
+			]
+		]
+	},
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "Power Lv 1",
+		"effect": "power",
+		"effect_strength": 2,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile power mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile power.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				0
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0
+			],
+			[
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "Capacity Lv 1",
+		"effect": "capacity",
+		"effect_strength": 10,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile capacity mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile capacity.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				0
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [10, 0, 0, 100],
+		"display_name": "Construction Lv 1",
+		"effect": "construction",
+		"effect_strength": 1,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile construction mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile construction.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				0,
+				1,
+				0,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				0,
+				0,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				-1,
+				-1,
+				0,
+				1
+			],
+			[
+				-2,
+				-1,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				2
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "HP Lv 2",
+		"effect": "health",
+		"effect_strength": 20,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile health mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile health.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				-1,
+				1,
+				-1,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				0,
+				1,
+				0
+			]
+		],
+		"ys": [
+			[
+				-2,
+				-1,
+				0,
+				1,
+				2
+			],
+			[
+				-1,
+				-1,
+				0,
+				0,
+				0
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "Energy Lv 2",
+		"effect": "energy",
+		"effect_strength": 200,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile energy mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile energy.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				-1,
+				0,
+				1,
+				0
+			],
+			[
+				0,
+				-2,
+				-1,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				-2,
+				-1,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				-1,
+				-1,
+				0,
+				0,
+				0
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "Power Lv 2",
+		"effect": "power",
+		"effect_strength": 4,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile power mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile power.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				-1,
+				0,
+				1,
+				-1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				1,
+				-2,
+				-1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-2,
+				-1,
+				0,
+				0,
+				0
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				-1,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "Speed Lv 2",
+		"effect": "speed",
+		"effect_strength": 800,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile speed mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile speed.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				-1,
+				0,
+				-1
+			],
+			[
+				-1,
+				0,
+				1,
+				0
+			],
+			[
+				0,
+				0,
+				0,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				1,
+				1
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "Capacity Lv 2",
+		"effect": "capacity",
+		"effect_strength": 20,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile capacity mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile capacity.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				-1,
+				0,
+				1,
+				0
+			],
+			[
+				-1,
+				0,
+				1,
+				-1,
+				1
+			],
+			[
+				-2,
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				1,
+				0,
+				-1,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				1
+			]
+		]
+	},
+	{
+		"cost": [20, 10, 0, 150],
+		"display_name": "Construction Lv 2",
+		"effect": "construction",
+		"effect_strength": 2,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile construction mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile construction.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				1,
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				2,
+				2
+			],
+			[
+				1,
+				-2,
+				-1,
+				0,
+				1,
+				-2
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				0,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				1,
+				1
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "HP Lv 3",
+		"effect": "health",
+		"effect_strength": 30,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile health mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile health.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				0,
+				1,
+				2,
+				-1,
+				2
+			],
+			[
+				0,
+				1,
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				0,
+				0
+			],
+			[
+				1,
+				0,
+				1,
+				0,
+				1,
+				0
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-2,
+				-1,
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				-2,
+				-1,
+				-1,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "Energy Lv 3",
+		"effect": "energy",
+		"effect_strength": 300,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile energy mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile energy.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				0,
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				-1,
+				0,
+				1,
+				-1,
+				1,
+				2
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				0
+			],
+			[
+				2,
+				-1,
+				0,
+				1,
+				2,
+				-1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				1,
+				1
+			],
+			[
+				-2,
+				-2,
+				-1,
+				0,
+				1,
+				2
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "Power Lv 3",
+		"effect": "power",
+		"effect_strength": 6,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile power mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile power.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				-1,
+				0,
+				-1,
+				0,
+				1
+			],
+			[
+				-2,
+				-1,
+				0,
+				1,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				1,
+				-1,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				1,
+				1,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				1,
+				1
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "Speed Lv 3",
+		"effect": "speed",
+		"effect_strength": 1200,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile speed mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile speed.png",
+		"unique": false,
+		"xs": [
+			[
+				0,
+				1,
+				2,
+				0,
+				0
+			],
+			[
+				-1,
+				0,
+				1,
+				0,
+				0
+			],
+			[
+				-2,
+				-1,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				-2,
+				-1,
+				0,
+				1
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				0,
+				1,
+				2
+			],
+			[
+				-1,
+				-1,
+				-1,
+				0,
+				1
+			],
+			[
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "Capacity Lv 3",
+		"effect": "capacity",
+		"effect_strength": 30,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile capacity mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile capacity.png",
+		"unique": false,
+		"xs": [
+			[
+				-1,
+				-1,
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				-2,
+				-1,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				1,
+				-1,
+				1
+			],
+			[
+				0,
+				1,
+				-2,
+				-1,
+				0,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				-1,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				-1,
+				0,
+				0,
+				0,
+				0
+			]
+		]
+	},
+	{
+		"cost": [40, 20, 10, 200],
+		"display_name": "Construction Lv 3",
+		"effect": "construction",
+		"effect_strength": 3,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile construction mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile construction.png",
+		"unique": false,
+		"xs": [
+			[
+				-2,
+				-1,
+				0,
+				1,
+				2,
+				-2,
+				2
+			],
+			[
+				2,
+				-2,
+				-1,
+				0,
+				1,
+				2,
+				-2
+			],
+			[
+				-2,
+				-2,
+				-1,
+				0,
+				1,
+				2,
+				2
+			]
+		],
+		"ys": [
+			[
+				0,
+				0,
+				0,
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1
+			],
+			[
+				-1,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [50, 50, 0, 200],
+		"display_name": "Swim Upgrade",
+		"effect": "swim",
+		"effect_strength": 0,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile unique mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile unique.png",
+		"unique": true,
+		"xs": [
+			[
+				0,
+				1,
+				-1,
+				0,
+				0
+			]
+		],
+		"ys": [
+			[
+				-1,
+				-1,
+				0,
+				0,
+				1
+			]
+		]
+	},
+	{
+		"cost": [100, 50, 50, 500],
+		"display_name": "Flight Upgrade",
+		"effect": "flight",
+		"effect_strength": 0,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile unique mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile unique.png",
+		"unique": true,
+		"xs": [
+			[
+				0,
+				-1,
+				0,
+				1,
+				-1,
+				1
+			]
+		],
+		"ys": [
+			[
+				-1,
+				0,
+				0,
+				0,
+				1,
+				1
+			]
+		]
+	}
+]

@@ -22,8 +22,6 @@ var robot: Robot
 
 func _ready() -> void:
 	main.timestop_toggle(true, true)
-	var fake: Array[Vector2i] = [Vector2i(0, -1), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1)]
-	# $"menu/upgrades_list/fake/fake preview".initialize(fake, load("res://assets/upgrade sprites/upgrade tile unique mini.png"))
 	
 	var grid_size = $grid.get_rect().end - $grid.get_rect().position
 	tile_grid.region = Rect2i(Vector2i.ZERO, grid_size / 64)
@@ -65,7 +63,6 @@ func _input(event: InputEvent) -> void:
 			upgrades[upgrades_list_children[idx].get_meta("id")]
 			):
 			idx -= 1
-		print(idx)
 		$menu/upgrades_list.move_child(upgrades_list_children[upgrades_list_children.size() - 1], idx + 1)
 		next_id += 1
 		held_part.queue_free()
@@ -118,7 +115,7 @@ func _on_menu_input(event: InputEvent) -> void:
 				add_child(held_part)
 
 func _on_build_button_pressed() -> void:
-	# close the upgrade menu
+	# close the upgrade menu 
 	if robot == null:
 		factory.receive_orders(stat_changes, unique_changes, slotted_parts)
 	else:
@@ -126,6 +123,7 @@ func _on_build_button_pressed() -> void:
 	main.upgrades.clear()
 	for upgrade in upgrades.values():
 		main.upgrades.append(upgrade)
+	main.upgrades.sort_custom(Lib.upgrade_comparator)
 	main.timestop_toggle(true, false)
 	queue_free()
 

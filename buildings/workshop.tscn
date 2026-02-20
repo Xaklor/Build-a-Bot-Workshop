@@ -110,5 +110,13 @@ layout_mode = 2
 [node name="queue_list" type="VBoxContainer" parent="menu/queue/scroll_container"]
 layout_mode = 2
 
+[node name="progressbar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 32.0
+offset_bottom = -40.0
+show_percentage = false
+
 [connection signal="gui_input" from="menu/parts/scroll_container/parts_list" to="." method="_on_parts_click"]
 [connection signal="gui_input" from="menu/queue/scroll_container" to="." method="_on_queue_click"]

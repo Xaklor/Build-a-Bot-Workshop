@@ -1,43 +1,22 @@
 extends Area2D
 
-const MASTER_UPGRADES_LIST = [
-	["Swim Upgrade", "50", "50", "-", "200"],
-	["Flight Upgrade", "100", "50", "50", "500"],
-	["HP Lv 1", "10", "-", "-", "100"],
-	["HP Lv 2", "20", "10", "-", "150"],
-	["HP Lv 3", "40", "20", "10", "200"],
-	["Energy Lv 1", "10", "-", "-", "100"],
-	["Energy Lv 2", "20", "10", "-", "150"],
-	["Energy Lv 3", "40", "20", "10", "200"],
-	["Power Lv 1", "10", "-", "-", "100"],
-	["Power Lv 2", "20", "10", "-", "150"],
-	["Power Lv 3", "40", "20", "10", "200"],
-	["Speed Lv 1", "10", "-", "-", "100"],
-	["Speed Lv 2", "20", "10", "-", "150"],
-	["Speed Lv 3", "40", "20", "10", "200"],
-	["Capacity Lv 1", "10", "-", "-", "100"],
-	["Capacity Lv 2", "20", "10", "-", "150"],
-	["Capacity Lv 3", "40", "20", "10", "200"],
-	["Construction Lv 1", "10", "-", "-", "100"],
-	["Construction Lv 2", "20", "10", "-", "150"],
-	["Construction Lv 3", "40", "20", "10", "200"],
-]
-
+@onready var UPGRADE_DATA = get_tree().get_root().get_node("main").savedata_upgrades.duplicate()
+@onready var main = get_tree().get_root().get_node("main")
 var build_queue: Array[Array]
 var build_progress: int
 
 func _ready() -> void:
-	for entry in MASTER_UPGRADES_LIST:
+	for entry in UPGRADE_DATA:
 		var row = HBoxContainer.new()
 		var name = Label.new()
 		var subrow = HBoxContainer.new()
 		var metals = Label.new()
 		var gems = Label.new()
 		var essence = Label.new()
-		name.text = entry[0]
-		metals.text = entry[1]
-		gems.text = entry[2]
-		essence.text = entry[3]
+		name.text = entry["display_name"]
+		metals.text = str(entry["cost"][0])
+		gems.text = str(entry["cost"][1])
+		essence.text = str(entry["cost"][2])
 		row.set_h_size_flags(row.SIZE_EXPAND_FILL)
 		name.set_h_size_flags(name.SIZE_EXPAND_FILL)
 		subrow.set_h_size_flags(subrow.SIZE_EXPAND_FILL)
@@ -58,26 +37,50 @@ func _process(delta: float) -> void:
 		for robot in robot_list:
 			if robot.position == self.position + Vector2(0, 64):
 				build_progress += robot.build_speed
+				$progressbar.value = build_progress / build_queue[0][1] * 100
 				if build_progress >= int(build_queue[0][1]):
+					# build the new upgrade
+					var id = build_queue[0][2]
+					var sprite = Sprite2D.new()
+					sprite.texture = load(UPGRADE_DATA[id]["sprite_path"])
+					sprite.centered = false
+					var icon = Sprite2D.new()
+					icon.texture = load(UPGRADE_DATA[id]["icon_path"])
+					var polyomino: Array[Vector2i] = []
+					var variant = randi() % UPGRADE_DATA[id]["xs"].size()
+					for idx in range(UPGRADE_DATA[id]["xs"][variant].size()):
+						polyomino.append(Vector2i(UPGRADE_DATA[id]["xs"][variant][idx], UPGRADE_DATA[id]["ys"][variant][idx]))
+						
+					var upgrade: Lib.Upgrade = Lib.Upgrade.new(sprite, icon, polyomino, UPGRADE_DATA[id]["effect"], UPGRADE_DATA[id]["effect_strength"], UPGRADE_DATA[id]["unique"])
+					main.upgrades.append(upgrade)
+					main.upgrades.sort_custom(Lib.upgrade_comparator)
+					
 					build_progress = 0
 					build_queue.pop_front()
 					$menu/queue/scroll_container/queue_list.get_child(0).queue_free()
+					if build_queue.size() == 0:
+						$progressbar.visible = false
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc"):
-		$menu.visible = $color.get_rect().has_point(get_local_mouse_position())
+		$menu.visible = $color.get_rect().has_point(get_local_mouse_position()) or ($menu.get_rect().has_point(get_local_mouse_position()) and $menu.visible)
 
 func _on_parts_click(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("lc"):
+	if Input.is_action_just_pressed("lc") and $menu.visible:
 		for idx in range($menu/parts/scroll_container/parts_list.get_children().size()):
 			var entry = $menu/parts/scroll_container/parts_list.get_child(idx)
 			if entry.get_rect().has_point($menu/parts/scroll_container/parts_list.get_local_mouse_position()):
 				if idx > 0:
 					var label = Label.new()
-					label.text = MASTER_UPGRADES_LIST[idx - 1][0]
-					var queue_entry = [MASTER_UPGRADES_LIST[idx - 1][0], MASTER_UPGRADES_LIST[idx - 1][4]]
+					label.text = UPGRADE_DATA[idx - 1]["display_name"]
+					var queue_entry = [UPGRADE_DATA[idx - 1]["display_name"], UPGRADE_DATA[idx - 1]["cost"][3], idx - 1]
 					build_queue.append(queue_entry)
 					$menu/queue/scroll_container/queue_list.add_child(label)
+					$progressbar.visible = true
 
 func _on_queue_click(event: InputEvent) -> void:
-	pass # Replace with function body.
+	if Input.is_action_just_pressed("lc") and $menu.visible:
+		for idx in range($menu/queue/scroll_container/queue_list.get_children().size()):
+			if $menu/queue/scroll_container/queue_list.get_child(idx).get_rect().has_point($menu/queue/scroll_container/queue_list.get_local_mouse_position()):
+				$menu/queue/scroll_container/queue_list.get_child(idx).queue_free()
+				build_queue.remove_at(idx)

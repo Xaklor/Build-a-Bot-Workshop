@@ -1,0 +1,9 @@
+[
+	{
+		"effect": "",
+		"effect_strength": 0,
+		"icon_path": "res://assets/upgrade sprites/upgrade tile unique mini.png",
+		"sprite_path": "res://assets/upgrade sprites/upgrade tile unique.png",
+		"unique": false,
+	}
+]

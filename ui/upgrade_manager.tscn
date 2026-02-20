@@ -25,21 +25,6 @@ centered = false
 position = Vector2(416, 352)
 texture = ExtResource("4_e5t5k")
 
-[node name="fake" type="HBoxContainer" parent="."]
-offset_left = 768.0
-offset_top = 64.0
-offset_right = 901.0
-offset_bottom = 112.0
-theme_override_constants/separation = 10
-
-[node name="fake preview" parent="fake" instance=ExtResource("5_e5t5k")]
-layout_mode = 2
-
-[node name="fake label" type="Label" parent="fake"]
-layout_mode = 2
-text = "fake 9001"
-metadata/id = 0
-
 [node name="menu" type="ScrollContainer" parent="."]
 offset_left = 768.0
 offset_top = 64.0
