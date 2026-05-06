@@ -10,9 +10,9 @@ var upgrades: Array[Lib.Upgrade] = []
 var savedata_upgrades: Array = []
 
 func _init() -> void:
-	if FileAccess.file_exists("res://lib/parts.json"):
+	if FileAccess.file_exists("res://data/parts.json"):
 		var json = JSON.new()
-		var result = json.parse(FileAccess.get_file_as_string("res://lib/parts.json"))
+		var result = json.parse(FileAccess.get_file_as_string("res://data/parts.json"))
 		if result == OK:
 			savedata_upgrades = json.data
 			savedata_upgrades.sort_custom(Lib.json_comparator)

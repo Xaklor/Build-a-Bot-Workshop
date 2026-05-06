@@ -229,10 +229,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		$menu.visible = false
 		if selected:
 			var click_pos = tile_map.local_to_map(get_global_mouse_position())
+			tile_map.claim_pos(claimed_pos, false)
 			path = navigate(click_pos)
 			if not path.is_empty():
 				selected = false
-				update_claimed_position(click_pos)
+				claimed_pos = click_pos
+				tile_map.claim_pos(click_pos)
+				
+			else:
+				tile_map.claim_pos(claimed_pos)
 				
 		# select self to listen to orders
 		elif $color.get_rect().has_point(get_local_mouse_position()):

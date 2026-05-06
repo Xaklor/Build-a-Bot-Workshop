@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://vww06adkxjjq"]
+[gd_scene format=3 uid="uid://vww06adkxjjq"]
 
 [ext_resource type="Script" uid="uid://4lccil06vgh1" path="res://entities/robot.gd" id="1_br0rw"]
 [ext_resource type="PackedScene" uid="uid://dshpdwdjn7gvl" path="res://ui/build_manager.tscn" id="2_8mpls"]
@@ -8,17 +8,17 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl0xr"]
 size = Vector2(60, 60)
 
-[node name="robot" type="Area2D" groups=["entities", "robots"]]
+[node name="robot" type="Area2D" unique_id=1238611786 groups=["entities", "robots"]]
 process_mode = 1
 script = ExtResource("1_br0rw")
 build_manager = ExtResource("2_8mpls")
 upgrade_manager = ExtResource("3_l8ivr")
 
-[node name="hitbox" type="CollisionShape2D" parent="."]
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=802439275]
 visible = false
 shape = SubResource("RectangleShape2D_gl0xr")
 
-[node name="color" type="ColorRect" parent="."]
+[node name="color" type="ColorRect" parent="." unique_id=1864105307]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -36,12 +36,12 @@ size_flags_vertical = 4
 mouse_filter = 2
 color = Color(0.780392, 0.266667, 0.384314, 1)
 
-[node name="sprite" type="Sprite2D" parent="."]
+[node name="sprite" type="Sprite2D" parent="." unique_id=278650630]
 clip_children = 2
 position = Vector2(0, -7)
 texture = ExtResource("3_poxae")
 
-[node name="attack_highlight" type="ColorRect" parent="sprite"]
+[node name="attack_highlight" type="ColorRect" parent="sprite" unique_id=439658427]
 offset_left = -32.0
 offset_top = -41.0
 offset_right = 32.0
@@ -49,7 +49,7 @@ offset_bottom = 39.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="select_highlight" type="ColorRect" parent="sprite"]
+[node name="select_highlight" type="ColorRect" parent="sprite" unique_id=1982448683]
 visible = false
 clip_children = 2
 offset_left = -32.0
@@ -59,10 +59,10 @@ offset_bottom = 39.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.359)
 
-[node name="attack_cooldown" type="Timer" parent="."]
+[node name="attack_cooldown" type="Timer" parent="." unique_id=1339079311]
 one_shot = true
 
-[node name="work_bar" type="ProgressBar" parent="."]
+[node name="work_bar" type="ProgressBar" parent="." unique_id=2019188059]
 visible = false
 offset_left = -32.0
 offset_top = -56.0
@@ -71,14 +71,14 @@ offset_bottom = -48.0
 mouse_filter = 2
 show_percentage = false
 
-[node name="status_label" type="Label" parent="."]
+[node name="status_label" type="Label" parent="." unique_id=1763316202]
 visible = false
 offset_left = -32.0
 offset_top = 32.0
 offset_right = 32.0
 offset_bottom = 55.0
 
-[node name="menu" type="TabContainer" parent="."]
+[node name="menu" type="TabContainer" parent="." unique_id=1694270604]
 visible = false
 z_index = 500
 z_as_relative = false
@@ -90,29 +90,29 @@ mouse_filter = 0
 theme_override_font_sizes/font_size = 14
 current_tab = 0
 
-[node name="upgrade" type="VBoxContainer" parent="menu"]
+[node name="upgrade" type="VBoxContainer" parent="menu" unique_id=2147418753]
 layout_mode = 2
 alignment = 1
 metadata/_tab_index = 0
 
-[node name="upgrade_button" type="Button" parent="menu/upgrade"]
+[node name="upgrade_button" type="Button" parent="menu/upgrade" unique_id=1792499036]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "Open Upgrades"
 
-[node name="upgrade_label" type="Label" parent="menu/upgrade"]
+[node name="upgrade_label" type="Label" parent="menu/upgrade" unique_id=1072882254]
 layout_mode = 2
 text = "Robot must be 
 standing on
 Factory output"
 horizontal_alignment = 1
 
-[node name="build" type="VBoxContainer" parent="menu"]
+[node name="build" type="VBoxContainer" parent="menu" unique_id=1155436785]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="menu/build"]
+[node name="MarginContainer" type="MarginContainer" parent="menu/build" unique_id=1652467416]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
@@ -120,25 +120,25 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="menu/build/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="menu/build/MarginContainer" unique_id=550806433]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="menu/build/MarginContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="menu/build/MarginContainer/ScrollContainer" unique_id=214799844]
 layout_mode = 2
 
-[node name="repository" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="repository" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer" unique_id=378921418]
 layout_mode = 2
 text = "Repository"
 
-[node name="factory" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="factory" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer" unique_id=1567194979]
 layout_mode = 2
 text = "Factory"
 
-[node name="charger" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="charger" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer" unique_id=432373168]
 layout_mode = 2
 text = "Charger"
 
-[node name="mine" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer"]
+[node name="mine" type="Label" parent="menu/build/MarginContainer/ScrollContainer/VBoxContainer" unique_id=2066597085]
 layout_mode = 2
 text = "Mine"
 
