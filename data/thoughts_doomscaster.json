@@ -1,0 +1,77 @@
+{
+    "level0": {
+        "hp": 10,
+        "speed": 0,
+        "attack1": 5
+    },
+    "level1": {
+        "hp": 20,
+        "speed": 0,
+        "attack1": 10
+    },
+    "level2": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "level3": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "thoughts": [
+        {
+            "condition": "has tag",
+            "arg1": "vulnerable",
+            "not": true,
+            "and": true
+        },
+        {
+            "condition": "hp low",
+            "arg1": "100",
+            "tagadd": "vulnerable"
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 6,
+            "behavior": "attack",
+            "target": "robot"
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 10,
+            "behavior": "special",
+            "target": "robot"
+        },
+        {
+            "condition": "in range",
+            "arg1": "factory",
+            "arg2": 6,
+            "behavior": "attack",
+            "target": "factory"
+        },
+        {
+            "condition": "in range",
+            "arg1": "factory",
+            "arg2": 10,
+            "behavior": "special",
+            "target": "factory"
+        },
+        {
+            "condition": "in range",
+            "arg1": "building",
+            "arg2": 6,
+            "behavior": "attack",
+            "target": "building"
+        },
+        {
+            "condition": "in range",
+            "arg1": "building",
+            "arg2": 10,
+            "behavior": "special",
+            "target": "building"
+        }
+    ]
+}

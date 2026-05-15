@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://bhmq5f3vg5p5e"]
+[gd_scene format=4 uid="uid://bhmq5f3vg5p5e"]
 
 [ext_resource type="Script" uid="uid://bwncan3rjv7e2" path="res://level/main.gd" id="1_fh3di"]
 [ext_resource type="Texture2D" uid="uid://b8ggwrul76kgp" path="res://assets/basic tileset.png" id="2_epufq"]
@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://d34mqdeyal0gm" path="res://buildings/workshop.tscn" id="8_ns06i"]
 [ext_resource type="PackedScene" uid="uid://cxkjehvkb3ect" path="res://buildings/mine.tscn" id="8_pjfo3"]
 [ext_resource type="PackedScene" uid="uid://dtm6rytj8v23a" path="res://entities/urgle.tscn" id="9_bypdj"]
-[ext_resource type="PackedScene" uid="uid://221hpelvs8kh" path="res://entities/bear.tscn" id="10_mt04e"]
 [ext_resource type="PackedScene" uid="uid://b8demwhq352jk" path="res://ui/hud.tscn" id="11_wlkra"]
+[ext_resource type="PackedScene" uid="uid://5ypuu2i42kvg" path="res://entities/hex_candle.tscn" id="13_ns06i"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5qli"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -41,58 +41,59 @@ custom_data_layer_0/name = "tile_type"
 custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_0wfyh")
 
-[node name="main" type="Node"]
+[node name="main" type="Node" unique_id=1248536267]
 script = ExtResource("1_fh3di")
 
-[node name="tile_map" type="TileMapLayer" parent="."]
+[node name="tile_map" type="TileMapLayer" parent="." unique_id=1840659098]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAEAAAAAAAEAAAABAAEAAAAAAAIAAAABAAEAAAAAAAMAAAABAAEAAAAAAAQAAAABAAEAAAAAAAUAAAABAAEAAAAAAAYAAAABAAEAAAAAAAcAAAABAAEAAAAAAAgAAAABAAEAAAAAAAkAAAABAAEAAAAAAAoAAAABAAEAAAABAAAAAAABAAEAAAABAAEAAAAAAAEAAAABAAIAAAAAAAEAAAABAAMAAAAAAAEAAAABAAQAAAAAAAEAAAABAAUAAAAAAAEAAAABAAYAAAAAAAEAAAABAAcAAAAAAAEAAAABAAgAAAAAAAEAAAABAAkAAAAAAAEAAAABAAoAAAABAAEAAAACAAAAAAABAAEAAAACAAEAAAAAAAEAAAACAAIAAAAAAAEAAAACAAMAAAAAAAEAAAACAAQAAAAAAAEAAAACAAUAAAAAAAEAAAACAAYAAAAAAAEAAAACAAcAAAAAAAEAAAACAAgAAAAAAAEAAAACAAkAAAAAAAEAAAACAAoAAAABAAEAAAADAAAAAAABAAEAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAMAAAAAAAEAAAADAAQAAAAAAAEAAAADAAUAAAAAAAEAAAADAAYAAAAAAAEAAAADAAcAAAAAAAEAAAADAAgAAAABAAAAAAADAAkAAAABAAAAAAADAAoAAAABAAEAAAAEAAAAAAABAAEAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAMAAAABAAAAAAAEAAQAAAAAAAEAAAAEAAUAAAAAAAEAAAAEAAYAAAAAAAEAAAAEAAcAAAABAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAEAAAAFAAAAAAABAAEAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAMAAAABAAAAAAAFAAQAAAAAAAEAAAAFAAUAAAAAAAEAAAAFAAYAAAAAAAEAAAAFAAcAAAABAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAEAAAAGAAAAAAABAAEAAAAGAAEAAAABAAAAAAAGAAIAAAABAAAAAAAGAAMAAAABAAAAAAAGAAQAAAAAAAEAAAAGAAUAAAAAAAEAAAAGAAYAAAAAAAEAAAAGAAcAAAABAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAABAAEAAAAHAAAAAAABAAEAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAMAAAABAAAAAAAHAAQAAAAAAAEAAAAHAAUAAAAAAAEAAAAHAAYAAAABAAAAAAAHAAcAAAABAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAABAAEAAAAIAAAAAAABAAEAAAAIAAEAAAABAAAAAAAIAAIAAAABAAAAAAAIAAMAAAABAAAAAAAIAAQAAAABAAAAAAAIAAUAAAABAAAAAAAIAAYAAAABAAAAAAAIAAcAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAABAAAAAAAIAAoAAAABAAEAAAAJAAAAAAABAAEAAAAJAAEAAAABAAAAAAAJAAIAAAABAAAAAAAJAAMAAAABAAAAAAAJAAQAAAABAAAAAAAJAAUAAAABAAAAAAAJAAYAAAABAAAAAAAJAAcAAAABAAAAAAAJAAgAAAABAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAEAAAAKAAAAAAABAAEAAAAKAAEAAAABAAAAAAAKAAIAAAABAAAAAAAKAAMAAAABAAAAAAAKAAQAAAABAAAAAAAKAAUAAAABAAAAAAAKAAYAAAABAAAAAAAKAAcAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAEAAAALAAAAAAABAAEAAAALAAEAAAABAAAAAAALAAIAAAABAAAAAAALAAMAAAABAAAAAAALAAQAAAABAAAAAAALAAUAAAABAAAAAAALAAYAAAABAAAAAAALAAcAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAEAAAAMAAAAAAABAAEAAAAMAAEAAAABAAAAAAAMAAIAAAABAAAAAAAMAAMAAAABAAAAAAAMAAQAAAABAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAAAAAAMAAcAAAABAAAAAAAMAAgAAAABAAAAAAAMAAkAAAABAAAAAAAMAAoAAAABAAEAAAANAAAAAAABAAEAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAMAAAABAAAAAAANAAQAAAAAAAAAAAANAAUAAAAAAAAAAAANAAYAAAAAAAAAAAANAAcAAAABAAAAAAANAAgAAAABAAAAAAANAAkAAAABAAAAAAANAAoAAAABAAEAAAAOAAAAAAABAAEAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAMAAAABAAAAAAAOAAQAAAAAAAAAAAAOAAUAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAcAAAABAAAAAAAOAAgAAAABAAAAAAAOAAkAAAABAAAAAAAOAAoAAAABAAEAAAAPAAAAAAABAAEAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAMAAAABAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAEAAAAQAAAAAAABAAEAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAMAAAAAAAAAAAAQAAQAAAAAAAAAAAAQAAUAAAAAAAAAAAAQAAYAAAAAAAAAAAAQAAcAAAAAAAAAAAAQAAgAAAABAAAAAAAQAAkAAAABAAAAAAAQAAoAAAABAAEAAAARAAAAAAABAAEAAAARAAEAAAAAAAAAAAARAAIAAAAAAAAAAAARAAMAAAAAAAAAAAARAAQAAAAAAAAAAAARAAUAAAAAAAAAAAARAAYAAAAAAAAAAAARAAcAAAAAAAAAAAARAAgAAAAAAAAAAAARAAkAAAAAAAAAAAARAAoAAAABAAEAAAASAAAAAAABAAEAAAASAAEAAAAAAAAAAAASAAIAAAAAAAAAAAASAAMAAAAAAAAAAAASAAQAAAAAAAAAAAASAAUAAAAAAAAAAAASAAYAAAAAAAAAAAASAAcAAAAAAAAAAAASAAgAAAAAAAAAAAASAAkAAAAAAAAAAAASAAoAAAABAAEAAAATAAAAAAABAAEAAAATAAEAAAABAAEAAAATAAIAAAABAAEAAAATAAMAAAABAAEAAAATAAQAAAABAAEAAAATAAUAAAABAAEAAAATAAYAAAABAAEAAAATAAcAAAABAAEAAAATAAgAAAABAAEAAAATAAkAAAABAAEAAAATAAoAAAABAAEAAAA=")
 tile_set = SubResource("TileSet_sugp2")
 navigation_enabled = false
 script = ExtResource("3_ns06i")
 claim_indicator = ExtResource("4_epufq")
 
-[node name="robot_factory" parent="." instance=ExtResource("4_npgwh")]
+[node name="robot_factory" parent="." unique_id=770816186 instance=ExtResource("4_npgwh")]
 position = Vector2(800, 544)
 
-[node name="charger" parent="." instance=ExtResource("6_177d4")]
+[node name="charger" parent="." unique_id=1051259918 instance=ExtResource("6_177d4")]
 position = Vector2(544, 352)
 
-[node name="repository" parent="." instance=ExtResource("7_i7a4y")]
+[node name="repository" parent="." unique_id=1841346528 instance=ExtResource("7_i7a4y")]
 position = Vector2(928, 544)
 
-[node name="workshop" parent="." instance=ExtResource("8_ns06i")]
+[node name="workshop" parent="." unique_id=262972213 instance=ExtResource("8_ns06i")]
 position = Vector2(736, 352)
 
-[node name="mine" parent="." instance=ExtResource("8_pjfo3")]
+[node name="mine" parent="." unique_id=615149 instance=ExtResource("8_pjfo3")]
 position = Vector2(736, 160)
 
-[node name="mine2" parent="." instance=ExtResource("8_pjfo3")]
+[node name="mine2" parent="." unique_id=1750850313 instance=ExtResource("8_pjfo3")]
 position = Vector2(864, 160)
 resource = "gems"
 inventory = 200
 
-[node name="mine3" parent="." instance=ExtResource("8_pjfo3")]
+[node name="mine3" parent="." unique_id=698373905 instance=ExtResource("8_pjfo3")]
 position = Vector2(992, 160)
 resource = "essence"
 inventory = 50
 
-[node name="urgle" parent="." instance=ExtResource("9_bypdj")]
-position = Vector2(352, 160)
-
-[node name="urgle2" parent="." instance=ExtResource("9_bypdj")]
-position = Vector2(352, 224)
-
-[node name="bear" parent="." instance=ExtResource("10_mt04e")]
+[node name="urgle" parent="." unique_id=6386612 instance=ExtResource("9_bypdj")]
 position = Vector2(352, 544)
 
-[node name="robots" type="Node2D" parent="."]
+[node name="urgle2" parent="." unique_id=642784898 instance=ExtResource("9_bypdj")]
+position = Vector2(352, 608)
 
-[node name="robot" parent="robots" instance=ExtResource("5_b6row")]
+[node name="entities" type="Node2D" parent="." unique_id=16720634]
+
+[node name="robot" parent="entities" unique_id=72495095 instance=ExtResource("5_b6row")]
 position = Vector2(672, 544)
 
-[node name="hud" parent="." instance=ExtResource("11_wlkra")]
+[node name="hex_candle" parent="entities" unique_id=948251097 instance=ExtResource("13_ns06i")]
+position = Vector2(352, 160)
+level = 0
 
-[node name="dimmer" type="ColorRect" parent="."]
+[node name="hud" parent="." unique_id=22975190 instance=ExtResource("11_wlkra")]
+
+[node name="dimmer" type="ColorRect" parent="." unique_id=256692382]
 visible = false
 offset_right = 1280.0
 offset_bottom = 704.0
@@ -101,4 +102,4 @@ color = Color(0.137, 0.137, 0.137, 0.359)
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
-[connection signal="child_entered_tree" from="robots" to="." method="_on_child_entered_tree"]
+[connection signal="child_entered_tree" from="entities" to="." method="_on_child_entered_tree"]

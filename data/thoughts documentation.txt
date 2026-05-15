@@ -1,0 +1,61 @@
+conditions:
+    none: always passes
+
+    in range: passes if entity is in the provided range
+        arg1: the entity being searched for [robot]
+        arg2: the range to search for entity [int]
+    
+    x in range: passes if x copies of entity is in the provided range
+        arg1: the entity being searched for [string]
+        arg2: the range to search for the entity [int]
+        arg3: the number of entities to search for [int]
+
+    in home: passes if entity is in this entity's home region
+        arg1: the entity being searched for [string]
+
+    has tag: passes if a tag has been set
+        arg1: the name of the tag that needs to be set [string]
+
+    ally has tag: passes if an ally has a tag set
+        arg1: the entity to check the tag for [string]
+        arg2: the range to search for the entity [int]
+        arg3: the name of the tag that needs to be set [string]
+
+    hp low: passes if hp is at or below a given percentage (rounds down)
+        arg1: the threshold to trigger [float]
+
+behaviors:
+    idle: stand still
+
+    attack: attacks the nearest target
+        target: the type of target to attack [string]
+
+    special: perform special move on the nearest target (shield, meteor strike, paint rune, etc)
+        target: the type of target to attack [robot, building]
+
+    seek: walks towards the nearest target
+        target: the type of target to pathfind towards [string]
+        pathfind: if the user should use pathfinding to reach the target, assumed false if absent [bool]
+
+    wander: pathfind towards random positions, pausing after each one
+        range: how far from the spawn point the target positions can be [int]
+
+    flee: walks moves away from nearest target, does not pathfind
+        target: the entity to flee from [robot]
+    
+    aoe: attacks ALL targets within range (both robots and buildings)
+        range: how far away to attack targets
+
+modifiers:
+    chance: in addition to condition, if any, roll an X/100 chance for the condition to succeed [int]
+
+    pass: if true, continue down the list even if this condition passes, instead of stopping [bool]
+
+    and: if true, this condition must be met for the next thought to execute, 
+        including any conditions that thought already has. any behavior included in this thought is ignored. [bool]
+
+    not: if true, inverts the condition requirement [bool]
+
+    tagadd: sets this tag, does nothing if already set, requires condition to pass [string]
+
+    tagdel: removes this tag, does nothing if not set, requires condition to pass [string]

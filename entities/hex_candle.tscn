@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://5ypuu2i42kvg"]
+
+[ext_resource type="Script" uid="uid://c8jh36k6rlsu7" path="res://entities/hex_candle.gd" id="1_03fej"]
+[ext_resource type="Texture2D" uid="uid://dgetsc1bray50" path="res://assets/hex_candle.png" id="2_namqn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bm7if"]
+size = Vector2(64, 64)
+
+[node name="hex_candle" type="Area2D" unique_id=948251097]
+script = ExtResource("1_03fej")
+thoughts_filepath = "res://data/thoughts_hex_candle.json"
+base_behavior_filepath = "res://data/base_idle.json"
+level = null
+
+[node name="hitbox" type="CollisionShape2D" parent="." unique_id=734507093]
+visible = false
+shape = SubResource("RectangleShape2D_bm7if")
+
+[node name="sprite" type="Sprite2D" parent="." unique_id=568781858]
+position = Vector2(0, -8)
+texture = ExtResource("2_namqn")

@@ -1,0 +1,48 @@
+{
+    "level0": {
+        "hp": 10,
+        "speed": 0,
+        "attack1": 5
+    },
+    "level1": {
+        "hp": 20,
+        "speed": 0,
+        "attack1": 10
+    },
+    "level2": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "level3": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "thoughts": [
+        {
+            "condition": "in range",
+            "arg1": "guardian",
+            "arg2": 6,
+            "not": true,
+            "and": true
+        },
+        {
+            "condition": "ally has tag",
+            "arg1": "Guardian",
+            "arg2": 20,
+            "arg3": "alert",
+            "behavior": "seek",
+            "target": "guardian",
+            "pass": true
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 5,
+            "behavior": "attack",
+            "target": "robot",
+            "pass": true
+        }
+    ]
+}

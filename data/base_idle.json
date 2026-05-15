@@ -1,0 +1,8 @@
+{
+    "behaviors": [
+        {
+            "condition": "none",
+            "behavior": "idle"
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+{
+    "level0": {
+        "hp": 10,
+        "speed": 0,
+        "attack1": 5
+    },
+    "level1": {
+        "hp": 20,
+        "speed": 0,
+        "attack1": 10
+    },
+    "level2": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "level3": {
+        "hp": 30,
+        "speed": 0,
+        "attack1": 15
+    },
+    "thoughts": [
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 7,
+            "and": true
+        },
+        {
+            "condition": "has tag",
+            "arg1": "alert",
+            "not": true,
+            "tagadd": "alert"
+        },
+        {
+            "condition": "has tag",
+            "arg1": "shield used",
+            "not": true,
+            "and": true
+        },
+        {
+            "condition": "in home",
+            "arg1": "robot",
+            "behavior": "special",
+            "target": "robot",
+            "tagadd": "shield used"
+        },
+        {
+            "condition": "x in range",
+            "arg1": "robot",
+            "arg2": 3,
+            "arg3": 3,
+            "behavior": "aoe",
+            "range": 3
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 3,
+            "behavior": "attack",
+            "target": "robot"
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 7,
+            "behavior": "seek",
+            "target": "robot"
+        }
+    ]
+}

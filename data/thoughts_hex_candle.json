@@ -1,0 +1,52 @@
+{
+    "level0": {
+        "hp": 10,
+        "speed": 100,
+        "attack1": 5
+    },
+    "level1": {
+        "hp": 20,
+        "speed": 120,
+        "attack1": 10
+    },
+    "level2": {
+        "hp": 30,
+        "speed": 140,
+        "attack1": 15
+    },
+    "level3": {
+        "hp": 30,
+        "speed": 160,
+        "attack1": 15
+    },
+    "thoughts": [
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 1,
+            "behavior": "attack",
+            "target": "robot"
+        },
+        {
+            "condition": "in range",
+            "arg1": "robot",
+            "arg2": 7,
+            "behavior": "seek",
+            "target": "robot"
+        },
+        {
+            "condition": "in range",
+            "arg1": "building",
+            "arg2": 1,
+            "behavior": "attack",
+            "target": "building"
+        },
+        {
+            "condition": "in range",
+            "arg1": "building",
+            "arg2": 7,
+            "behavior": "seek",
+            "target": "building"
+        }
+    ]
+}

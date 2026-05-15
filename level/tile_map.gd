@@ -61,9 +61,9 @@ func is_point_walkable(point, mobility):
 	
 # wrapper for robots to claim positions on all three mobility maps
 func claim_pos(pos, solid = true, startup = false):
-	land_astar.set_point_solid(pos, solid)
-	water_astar.set_point_solid(pos, solid)
-	flight_astar.set_point_solid(pos, solid)
+	# land_astar.set_point_solid(pos, solid)
+	# water_astar.set_point_solid(pos, solid)
+	# flight_astar.set_point_solid(pos, solid)
 	
 	if solid and !startup:
 		var indicator = claim_indicator.instantiate()

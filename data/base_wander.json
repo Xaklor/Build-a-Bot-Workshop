@@ -1,0 +1,9 @@
+{
+    "behaviors": [
+        {
+            "condition": "none",
+            "behavior": "wander",
+            "range": 8
+        }
+    ]
+}

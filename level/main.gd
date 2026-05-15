@@ -1,6 +1,8 @@
 extends Node
 
 signal stop_time
+signal tick
+var time: float = 0.0
 var stopped = false
 var robot_ui_pointer = 1
 var metals = 1000
@@ -16,22 +18,37 @@ func _init() -> void:
 		if result == OK:
 			savedata_upgrades = json.data
 			savedata_upgrades.sort_custom(Lib.json_comparator)
+			
+	if FileAccess.file_exists("res://data/dummy.json"):
+		var json = JSON.new()
+		var result = json.parse(FileAccess.get_file_as_string("res://data/dummy.json"))
+		if result == OK:
+			for behavior in json.data["behaviors"]:
+				if behavior["condition"] == "none":
+					print(behavior["behavior"])
+		
 
 func _process(delta: float) -> void:
+	time += delta
+	if time >= 0.05:
+		time -= 0.05
+		tick.emit()
+	
 	var i = 1
-	var robots = $robots.get_children()
-	var ordering = range(robots.size())
-	ordering.sort_custom(func(a, b): return robots[a].position.y < robots[b].position.y)
-	for idx in range(robots.size()):
-		var ui_element = get_node("hud/VBoxContainer/robot_ui_element" + var_to_str(i))
-		ui_element.get_node("hp").value = float(robots[idx].hp) / robots[idx].max_hp * 100
-		ui_element.get_node("energy").value = float(robots[idx].energy) / robots[idx].max_energy * 100
-		if robots[idx].selected:
-			ui_element.get_node("color").color = Color(0xdb879aff)
-		else:
-			ui_element.get_node("color").color = Color(0xc74462ff)	
-		i += 1
-		$robots.move_child(robots[idx], ordering[idx])
+	var entities = $entities.get_children()
+	var ordering = range(entities.size())
+	ordering.sort_custom(func(a, b): return entities[a].position.y < entities[b].position.y)
+	for idx in range(entities.size()):
+		$entities.move_child(entities[idx], ordering[idx])
+		if entities[idx] is Robot:
+			var ui_element = get_node("hud/VBoxContainer/robot_ui_element" + var_to_str(i))
+			ui_element.get_node("hp").value = float(entities[idx].hp) / entities[idx].max_hp * 100
+			ui_element.get_node("energy").value = float(entities[idx].energy) / entities[idx].max_energy * 100
+			if entities[idx].selected:
+				ui_element.get_node("color").color = Color(0xdb879aff)
+			else:
+				ui_element.get_node("color").color = Color(0xc74462ff)	
+			i += 1
 	
 
 func _input(event: InputEvent) -> void:
