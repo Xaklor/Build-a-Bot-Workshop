@@ -5,6 +5,7 @@ class_name Robot extends Area2D
 @export var upgrade_manager: PackedScene
 @onready var tile_map: TileMapLayer = get_tree().get_root().get_node("main").get_node("tile_map")
 @onready var main = get_tree().get_root().get_node("main")
+@onready var entities = main.get_node("entities")
 
 enum state {
 	IDLE,
@@ -214,11 +215,9 @@ func _process(delta):
 		# if idle, attack enemies in range
 		##################################
 		elif status == state.IDLE and $attack_cooldown.time_left <= 0:
-			var enemy_list = get_tree().get_nodes_in_group("enemies")
-			for enemy in enemy_list:
-				var enemy_pos = tile_map.local_to_map(enemy.position)
-				if in_range(enemy_pos, 3):
-					enemy.take_damage(power)
+			for entity in entities.get_children():
+				if entity is Enemy and in_range(entity.grid_pos, 3):
+					entity.take_damage(power)
 					$sprite/attack_highlight.color.a = 1
 					$attack_cooldown.start()
 					energy -= 5

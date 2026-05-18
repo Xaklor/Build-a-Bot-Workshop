@@ -29,10 +29,11 @@ func _init() -> void:
 		
 
 func _process(delta: float) -> void:
-	time += delta
-	if time >= 0.05:
-		time -= 0.05
-		tick.emit()
+	if !stopped:
+		time += delta
+		if time >= 0.05:
+			time -= 0.05
+			tick.emit()
 	
 	var i = 1
 	var entities = $entities.get_children()

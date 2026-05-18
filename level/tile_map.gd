@@ -5,6 +5,7 @@ extends TileMapLayer
 var land_astar = AStarGrid2D.new()
 var water_astar = AStarGrid2D.new()
 var flight_astar = AStarGrid2D.new()
+var claimed_positions = {}
 
 func _ready():
 	var tilemap_size = get_used_rect().end - get_used_rect().position
@@ -44,26 +45,28 @@ func _ready():
 					land_astar.set_point_solid(pos)
 
 func is_point_walkable(point, mobility):
-	match mobility:
-		"land":
-			if land_astar.region.has_point(point) and not land_astar.is_point_solid(point):
-				return true
-		"water":
-			if water_astar.region.has_point(point) and not water_astar.is_point_solid(point):
-				return true
-		"flight":
-			if flight_astar.region.has_point(point) and not flight_astar.is_point_solid(point):
-				return true
-		_:
-			return false
-		
+	if !claimed_positions.has(point):
+		match mobility:
+			"land":
+				if land_astar.region.has_point(point) and not land_astar.is_point_solid(point):
+					return true
+			"water":
+				if water_astar.region.has_point(point) and not water_astar.is_point_solid(point):
+					return true
+			"flight":
+				if flight_astar.region.has_point(point) and not flight_astar.is_point_solid(point):
+					return true
+			_:
+				return false
+			
 	return false
 	
-# wrapper for robots to claim positions on all three mobility maps
+# wrapper for robots to claim positions
 func claim_pos(pos, solid = true, startup = false):
-	# land_astar.set_point_solid(pos, solid)
-	# water_astar.set_point_solid(pos, solid)
-	# flight_astar.set_point_solid(pos, solid)
+	if solid:
+		claimed_positions[pos] = true
+	else:
+		claimed_positions.erase(pos)
 	
 	if solid and !startup:
 		var indicator = claim_indicator.instantiate()
