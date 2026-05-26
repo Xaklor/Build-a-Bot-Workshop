@@ -59,9 +59,6 @@ offset_bottom = 39.0
 mouse_filter = 2
 color = Color(1, 1, 1, 0.359)
 
-[node name="attack_cooldown" type="Timer" parent="." unique_id=1339079311]
-one_shot = true
-
 [node name="work_bar" type="ProgressBar" parent="." unique_id=2019188059]
 visible = false
 offset_left = -32.0

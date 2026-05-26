@@ -14,14 +14,17 @@ enum state {
 	BUILDING
 }
 
-var facing: bool = false
+var flipped: bool = false
 var status: state = state.IDLE
 var path: Array[Vector2i]
+var move_target: Vector2 = Vector2(-1, -1)
 var selected = false
 var stopped = false
+var tick_lockout: int = 0
 var item: String = ""
 var item_amount: int = 0
 var claimed_pos: Vector2i
+var grid_pos: Vector2i
 var harvest_target: Node2D
 var harvest_pos: Vector2i
 var repository_target: Node2D
@@ -40,57 +43,62 @@ var equipped_parts: Array[Part]
 
 func _ready():
 	claimed_pos = tile_map.local_to_map(position)
+	grid_pos = claimed_pos
 	tile_map.claim_pos(claimed_pos, true, true)
 	main.stop_time.connect(_on_timestop)
+	main.tick.connect(_on_tick)
 	
 func _process(delta):
 	$status_label.text = var_to_str(status)
-	if not stopped:
+	$sprite/select_highlight.visible = selected
+	$work_bar.visible = $work_bar.value > 0
+	if !stopped:
 		if $sprite/attack_highlight.color.a > 0:
 			$sprite/attack_highlight.color.a -= 0.01
 			
-		$sprite/select_highlight.visible = selected
-		$work_bar.visible = $work_bar.value > 0
+		# if moving, keep moving
+		if move_target != Vector2(-1, -1):
+			var new_position = global_position.move_toward(move_target, speed * delta)
+			if new_position.x - global_position.x < 0 and not flipped:
+				$sprite.flip_h = true
+				flipped = true
+			elif new_position.x - global_position.x > 0 and flipped:
+				$sprite.flip_h = false
+				flipped = false
+			global_position = new_position
+			grid_pos = tile_map.local_to_map(global_position)
+			
+			# if we've reached the point, remove it from the path
+			if global_position == move_target:
+				energy -= 1
+				path.pop_front()
+				# if this is the destination, free the indicator
+				if path.is_empty():
+					tile_map.free_indicator(tile_map.local_to_map(move_target))
+				
+				move_target = Vector2(-1, -1)
+			
+		# otherwise, grab the next position in the path
+		elif !path.is_empty():
+			move_target = tile_map.map_to_local(path[0])
 
+func _on_tick():
+	if tick_lockout > 0:
+		tick_lockout -= 1
+	else:
 		##############################################################
-		# FIRST:
 		# if low on energy and a charger is in range, start recharging
 		##############################################################
-		if energy <= 20 and (status != state.RECHARGING or (status == state.RECHARGING and path.is_empty())):
+		if energy <= 20 and status != state.RECHARGING:
 			var charger_list = get_tree().get_nodes_in_group("chargers")
 			var charger_pos = tile_map.local_to_map(charger_list[0].position)
 			if in_range(charger_pos, 10):
-				status = state.RECHARGING
 				path = navigate(charger_pos)
 				if !path.is_empty():
 					update_claimed_position(charger_pos)
-			
-		########################################
-		# SECOND: 
-		# if already on a path, continue walking
-		########################################
-		if not path.is_empty():
-			var target = tile_map.map_to_local(path[0])
-			var new_position = global_position.move_toward(target, speed * delta)
-			if new_position.x - global_position.x < 0 and not facing:
-				$sprite.flip_h = true
-				facing = true
-			elif new_position.x - global_position.x > 0 and facing:
-				$sprite.flip_h = false
-				facing = false
-			global_position = new_position
-			
-			# if we've reached the point, remove it from the path
-			if global_position == target:
-				energy -= 1
-				path.pop_front()
-				
-				# if this is the destination, free the indicator
-				if path.is_empty():
-					tile_map.free_indicator(tile_map.local_to_map(target))
-
+					status = state.RECHARGING
+		
 		##############################################################
-		# THIRD:
 		# if recharging or idle and standing on a charger, gain energy
 		##############################################################
 		elif (status == state.RECHARGING or status == state.IDLE) and energy < max_energy and get_overlapping_areas().any(func(x): return x.is_in_group("chargers")):
@@ -116,7 +124,6 @@ func _process(delta):
 					status = state.IDLE
 		
 		############################################################
-		# FOURTH:
 		# if assigned a build and missing materials, go pick them up
 		############################################################
 		elif status == state.BUILDING and item_amount == 0 and claimed_pos != repository_pos:
@@ -125,7 +132,6 @@ func _process(delta):
 				update_claimed_position(repository_pos)
 		
 		###########################################################################
-		# FIFTH:
 		# if assigned a build and standing on the repository, pick up the materials
 		###########################################################################
 		elif status == state.BUILDING and item_amount == 0 and claimed_pos == repository_pos:
@@ -134,7 +140,6 @@ func _process(delta):
 			main.update_resource("metals", -10)
 				
 		###############################################################################
-		# SIXTH:
 		# if assigned a build and holding materials but not at the site, go to the site
 		###############################################################################
 		elif status == state.BUILDING and item_amount > 0 and claimed_pos != build_pos:
@@ -143,7 +148,6 @@ func _process(delta):
 				update_claimed_position(build_pos)
 				
 		##########################################################
-		# SEVENTH:
 		# if assigned a build and at the build site, make progress
 		##########################################################
 		elif status == state.BUILDING and item_amount > 0 and claimed_pos == build_pos:
@@ -166,7 +170,6 @@ func _process(delta):
 				status = state.IDLE
 				
 		################################################################
-		# EIGTH: 
 		# if idle and standing on a harvestable object, start harvesting
 		################################################################
 		elif status == state.IDLE and get_overlapping_areas().any(func(x): return x.has_meta("harvestable") and x.get_meta("harvestable")):
@@ -181,7 +184,6 @@ func _process(delta):
 			repository_pos = tile_map.local_to_map(repository_target.position)
 
 		##############################################################################
-		# NINTH:
 		# if harvesting and standing on a harvestable object, bring item to repository
 		##############################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x.has_meta("harvestable") and x.get_meta("harvestable")):
@@ -194,7 +196,6 @@ func _process(delta):
 				update_claimed_position(repository_pos)
 		
 		########################################################################
-		# TENTH:
 		# if harvesting and standing on a repository, insert item and fetch more
 		########################################################################
 		elif status == state.HARVESTING and get_overlapping_areas().any(func(x): return x == repository_target):
@@ -210,18 +211,22 @@ func _process(delta):
 				harvest_target = null
 				repository_target = null
 				
-		##################################
-		# ELEVENTH: 
-		# if idle, attack enemies in range
-		##################################
-		elif status == state.IDLE and $attack_cooldown.time_left <= 0:
+		###############################
+		# if idle, attack nearest enemy
+		###############################
+		elif status == state.IDLE:
+			var target = null
+			var dist = 50000000
 			for entity in entities.get_children():
-				if entity is Enemy and in_range(entity.grid_pos, 3):
-					entity.take_damage(power)
-					$sprite/attack_highlight.color.a = 1
-					$attack_cooldown.start()
-					energy -= 5
-					break
+				if entity is Enemy and get_dist(grid_pos, entity.grid_pos) < dist:
+					target = entity
+					dist = get_dist(grid_pos, entity.grid_pos)
+					
+			if target != null and dist <= 3:
+				target.take_damage(power)
+				$sprite/attack_highlight.color.a = 1
+				tick_lockout = 20
+				energy -= 5
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("lc"):
@@ -271,13 +276,13 @@ func navigate(target):
 	var out: Array[Vector2i] = []
 	if "flight" in unique_upgrades:
 		if tile_map.is_point_walkable(target, "flight"):
-			out = tile_map.flight_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+			out = tile_map.flight_astar.get_id_path(grid_pos, target).slice(1)
 	elif "swim" in unique_upgrades:
 		if tile_map.is_point_walkable(target, "water"):
-			out = tile_map.water_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+			out = tile_map.water_astar.get_id_path(grid_pos, target).slice(1)
 	else:
 		if tile_map.is_point_walkable(target, "land"):
-			out = tile_map.land_astar.get_id_path(tile_map.local_to_map(global_position), target).slice(1)
+			out = tile_map.land_astar.get_id_path(grid_pos, target).slice(1)
 
 	return out
 	
@@ -295,9 +300,13 @@ func receive_orders(building: String, building_position: Vector2i, repository: N
 	repository_target = repository
 	repository_pos = repository_position
 	
+# takes tile coords
 func in_range(pos: Vector2i, dist: int) -> bool:
-	var self_pos = tile_map.local_to_map(position)
-	return abs(self_pos.x - pos.x) + abs(self_pos.y - pos.y) <= dist
+	return abs(grid_pos.x - pos.x) + abs(grid_pos.y - pos.y) <= dist
+	
+# takes tile coords
+func get_dist(a: Vector2i, b: Vector2i) -> int:
+	return abs(a.x - b.x) + abs(a.y - b.y)
 
 func take_damage(damage: int):
 	hp -= damage
@@ -307,7 +316,6 @@ func take_damage(damage: int):
 	
 func _on_timestop(b: bool):
 	stopped = b
-	$attack_cooldown.paused = b
 
 func _on_upgrade_button_pressed() -> void:
 	var factory_list = get_tree().get_nodes_in_group("factories")
